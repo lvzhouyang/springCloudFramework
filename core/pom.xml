@@ -297,46 +297,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
-                <executions>
-                    <execution>
-                        <id>enforce</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>display-info</goal>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--;Default:false. -->
-                    <!--<failFast>true</failFast>-->
-                    <rules>
-                        <requireMavenVersion>
-                            <version>[3.0.3,)</version>
-                        </requireMavenVersion>
-                        <requireJavaVersion>
-                            <version>1.6.0</version>
-                        </requireJavaVersion>
-                        <dependencyConvergence>
-                            <!--<uniqueVersion>false</uniqueVersion>-->
-                        </dependencyConvergence>
-                        <!--<bannedDependencies>-->
-                        <!--&lt;!&ndash;()&ndash;&gt;-->
-                        <!--<searchTransitive>true</searchTransitive>-->
-                        <!--<excludes>-->
-                        <!--<exclude>junit:junit</exclude>-->
-                        <!--</excludes>-->
-                        <!--<message>must use TestNG</message>-->
-                        <!--</bannedDependencies>-->
-                    </rules>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
