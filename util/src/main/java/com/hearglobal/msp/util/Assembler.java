@@ -52,10 +52,12 @@ public class Assembler {
             for (Iterator<?> iterator = fromList.iterator(); iterator.hasNext(); ) {
                 Object fromObject = iterator.next();
                 T toObject = toClass.newInstance();
-                if (excludeFields.length > 0)
+                if (excludeFields.length > 0){
                     assemble(fromObject, toObject, excludeFields);
-                else
+                }
+                else{
                     assemble(fromObject, toObject);
+                }
                 toList.add(toObject);
             }
         } catch (Exception e) {
@@ -83,10 +85,12 @@ public class Assembler {
             for (int i = 0; i < fromList.size(); i++) {
                 Object fromObject = fromList.get(i);
                 T toObject = i >= toList.size() ? toClass.newInstance() : toList.get(i);
-                if (excludeFields.length > 0)
+                if (excludeFields.length > 0){
                     assemble(fromObject, toObject, excludeFields);
-                else
+                }
+                else{
                     assemble(fromObject, toObject);
+                }
                 toList.add(toObject);
             }
         } catch (Exception e) {

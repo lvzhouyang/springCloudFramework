@@ -4,3 +4,4 @@
 *.war
 */target
 */target/**
+**/.DS_Store
