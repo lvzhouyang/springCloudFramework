@@ -5,6 +5,7 @@
  */
 package com.hearglobal.msp.util;
 
+import com.google.common.collect.Lists;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class ReflectUtil {
      */
     public static Method[] getPublicGetMethods(Class<?> clazz) {
         Method[] declaredMethods = clazz.getDeclaredMethods();
-        List<Method> methodList = new ArrayList<Method>();
+        List<Method> methodList = Lists.newArrayList();
         for (Method method : declaredMethods) {
             String methodName = method.getName();
             if (methodName != null && !methodName.equals("get") && methodName.startsWith("get")) {
@@ -50,7 +51,7 @@ public class ReflectUtil {
      */
     public static Method[] getPublicSetMethods(Class<?> clazz) {
         Method[] declaredMethods = clazz.getDeclaredMethods();
-        List<Method> methodList = new ArrayList<Method>();
+        List<Method> methodList = Lists.newArrayList();
         for (Method method : declaredMethods) {
             String methodName = method.getName();
             if (methodName != null && !methodName.equals("set") && methodName.startsWith("set")) {
