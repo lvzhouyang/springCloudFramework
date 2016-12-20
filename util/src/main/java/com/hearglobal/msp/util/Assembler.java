@@ -74,8 +74,6 @@ public class Assembler {
      * @param toList        目标List
      * @param excludeFields 不需要装配的属性
      * @return
-     * @author zhaolei
-     * @created 2011-4-28
      */
     public static <T> List<T> assembleList2List(List<?> fromList,
                                                 List<T> toList,
