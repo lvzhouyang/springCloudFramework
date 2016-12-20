@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -47,11 +48,11 @@ public class MybatisDataSource {
         // check
         if (StringUtils.isEmpty(config.getUrl())){
             logger.error("请配置数据库连接!");
-            throw new BaseException("请配置数据库连接!");
+            throw new BaseException("数据库连接初始化失败!请配置数据库连接!");
         }
         if (StringUtils.isEmpty(config.getUsername())){
             logger.error("请配置数据库用户!");
-            throw new BaseException("请配置数据库用户!");
+            throw new BaseException("数据库连接初始化失败!请配置数据库用户!");
         }
         this.pool.setUrl(config.getUrl());
         if (config.getUsername() != null) {
@@ -67,7 +68,8 @@ public class MybatisDataSource {
         try {
             this.pool.setFilters("!stat,wall,log4j");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("数据库连接初始化失败!");
+            throw new BaseException("数据库连接初始化失败!");
         }
         return this.pool;
     }

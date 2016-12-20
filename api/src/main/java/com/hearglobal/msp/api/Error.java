@@ -3,6 +3,9 @@ package com.hearglobal.msp.api;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * api 错误类
+ */
 public class Error {
 
     private String code;
@@ -11,6 +14,12 @@ public class Error {
 
     private String requestUri;
 
+    /**
+     * json构造
+     * @param code
+     * @param requestUri
+     * @param message
+     */
     @JsonCreator
     public Error(@JsonProperty("code") String code,
                  @JsonProperty("requestUri") String requestUri,

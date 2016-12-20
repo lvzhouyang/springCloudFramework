@@ -69,7 +69,7 @@ public class ControllerInterceptor {
                 for (Method m : methods) {
                     try {
                         Object value = m.invoke(arg);
-                        if (value != null && value instanceof String && value.equals("")) {
+                        if (value != null && value instanceof String && "".equals(value)) {
                             Method setMethod = ReflectUtil
                                     .getSetMethod4GetMethod(m, arg.getClass());
                             if (setMethod != null) {
@@ -85,7 +85,7 @@ public class ControllerInterceptor {
                     }
                 }
             } else if (arg instanceof String) {
-                if (((String) arg).trim().equals("")) {
+                if ("".equals(arg.toString())) {
                     arg = null;
                 }
             }

@@ -1,5 +1,8 @@
 package com.hearglobal.msp.api;
 
+/**
+ * api接口请求 通用错误码
+ */
 public enum CommonErrorCode implements ErrorCode {
 
     BAD_REQUEST(400, "请求的参数个数或格式不符合要求"),
@@ -24,6 +27,11 @@ public enum CommonErrorCode implements ErrorCode {
         this.message = message;
     }
 
+    /**
+     * 根据http状态获取请求枚举
+     * @param httpStatus
+     * @return
+     */
     public static CommonErrorCode fromHttpStatus(int httpStatus) {
         for(CommonErrorCode errorCode : values()) {
             if(errorCode.getStatus() == httpStatus) {

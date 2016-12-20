@@ -6,6 +6,7 @@
 package com.hearglobal.msp.util;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class ReflectUtil {
         List<Method> methodList = Lists.newArrayList();
         for (Method method : declaredMethods) {
             String methodName = method.getName();
-            if (methodName != null && !methodName.equals("get") && methodName.startsWith("get")) {
+            if (methodName != null && !StringUtils.equals("get",methodName) && methodName.startsWith("get")) {
                 methodList.add(method);
             }
         }
@@ -54,7 +55,7 @@ public class ReflectUtil {
         List<Method> methodList = Lists.newArrayList();
         for (Method method : declaredMethods) {
             String methodName = method.getName();
-            if (methodName != null && !methodName.equals("set") && methodName.startsWith("set")) {
+            if (methodName != null && !StringUtils.equals("set",methodName) && methodName.startsWith("set")) {
                 methodList.add(method);
             }
         }
@@ -178,7 +179,7 @@ public class ReflectUtil {
      * @throws ClassNotFoundException
      */
     private static Class<?>[] getParamClass(Signature s) throws ClassNotFoundException {
-        Class<?>[] paramClass = null;
+        Class<?>[] paramClass;
         Pattern p = Pattern.compile("(?<=\\()\\S+(?=\\))");
         Matcher m = p.matcher(s.toLongString());
         String[] classNames = null;

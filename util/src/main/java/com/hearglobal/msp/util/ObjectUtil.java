@@ -1,6 +1,7 @@
 package com.hearglobal.msp.util;
 
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class ObjectUtil {
                 field.setAccessible(true);
                 Object object = field.get(obj);
                 // 跳过id，自增长主键
-                if (!field.getName().equals("id") && object == null) {
+                if (!StringUtils.equals("id", field.getName()) && object == null) {
                     setDefault(field, obj);
                 }
             }
@@ -54,7 +55,7 @@ public class ObjectUtil {
                 field.setAccessible(true);
                 Object object = field.get(obj);
                 // 跳过id，自增长主键
-                if (!field.getName().equals("id") && !fieldNameList.contains(field.getName()) && object == null) {
+                if (!StringUtils.equals("id", field.getName()) && !fieldNameList.contains(field.getName()) && object == null) {
                     setDefault(field, obj);
                 }
             }
@@ -145,6 +146,7 @@ public class ObjectUtil {
             }
             return sb.length() == 0 ? "{}" : "{" + sb.substring(0, sb.length() - 1) + "}";
         } catch (Exception e) {
+            log.error("ObjectUtil toString error,{}",obj);
             return obj.toString();
         }
     }
@@ -194,7 +196,7 @@ public class ObjectUtil {
         if (map == null) {
             return "null";
         }
-        for (Object key : map.keySet()) {
+        for (Object key : map.entrySet()) {
             Object value = map.get(key);
             sb.append("\"" + toString(key) + "\":" + toString(value) + ",");
         }
@@ -216,11 +218,12 @@ public class ObjectUtil {
 
     /**
      * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
+     *
      * @param obj
      * @return
      */
     public static Map<String, Object> transBean2Map(Object obj) {
-        if(obj == null){
+        if (obj == null) {
             return null;
         }
         Map<String, Object> map = Maps.newHashMap();
@@ -230,7 +233,7 @@ public class ObjectUtil {
             for (PropertyDescriptor property : propertyDescriptors) {
                 String key = property.getName();
                 // 过滤class属性
-                if (!key.equals("class")) {
+                if (!StringUtils.equals("class",key)) {
                     // 得到property对应的getter方法
                     Method getter = property.getReadMethod();
                     Object value = getter.invoke(obj);
