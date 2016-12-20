@@ -146,7 +146,7 @@ public class ObjectUtil {
             }
             return sb.length() == 0 ? "{}" : "{" + sb.substring(0, sb.length() - 1) + "}";
         } catch (Exception e) {
-            log.error("ObjectUtil toString error,{}",obj);
+            log.error("ObjectUtil toString error,{},{}",obj,e);
             return obj.toString();
         }
     }

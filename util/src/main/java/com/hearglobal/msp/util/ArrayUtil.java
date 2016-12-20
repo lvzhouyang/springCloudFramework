@@ -38,11 +38,11 @@ final public class ArrayUtil {
      * @return
      */
     public static <T> String getUniqueSqlString(List<T> list) {
-        if (list == null || list.size() < 1) {
+        if (CollectionUtils.isEmpty(list)) {
             return null;
         }
         List<Object> idList = Lists.newArrayList();
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (Object id : list) {
             if (idList.indexOf(id) >= 0) {
                 continue;
@@ -68,7 +68,7 @@ final public class ArrayUtil {
             return null;
         }
         List<Object> idList = Lists.newArrayList();
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (Object id : arr) {
             if (idList.indexOf(id) >= 0) {
                 continue;
@@ -170,7 +170,7 @@ final public class ArrayUtil {
                 set.add(e.toString());
             }
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (String e : set) {
             buf.append(split + e);
         }

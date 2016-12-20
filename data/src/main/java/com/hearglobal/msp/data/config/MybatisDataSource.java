@@ -68,7 +68,7 @@ public class MybatisDataSource {
         try {
             this.pool.setFilters("!stat,wall,log4j");
         } catch (SQLException e) {
-            logger.error("数据库连接初始化失败!");
+            logger.error("数据库连接初始化失败!,{}",e);
             throw new BaseException("数据库连接初始化失败!");
         }
         return this.pool;
