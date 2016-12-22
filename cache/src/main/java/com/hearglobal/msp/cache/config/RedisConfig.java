@@ -22,6 +22,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -112,14 +113,15 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.setValueSerializer(jackson2JsonRedisSerializer);
     }
 
+
     @Bean
-    public Jedis jedis() {
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        RedisProperties properties = redisProperties;
-        this.checkProperties(properties);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, redisProperties.getHost()
-                , NumberUtils.toInt(redisProperties.getPort()), NumberUtils.toInt(redisProperties.getTimeout())
-                , redisProperties.getPassword());
-        return jedisPool.getResource();
+    public RedisTemplate<String, Object> redisObjectTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new RedisObjectSerializer());
+        template.afterPropertiesSet();
+        return template;
     }
+
 }
