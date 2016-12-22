@@ -4,6 +4,7 @@ import com.hearglobal.msp.core.context.BaseConfiguration;
 import com.hearglobal.msp.core.context.WebApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.lang.annotation.*;
 
@@ -18,6 +19,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @SpringBootApplication
+@EnableAsync
 @Import({BaseConfiguration.class, WebApplication.class})
 public @interface CoreWebApplication {
 }
