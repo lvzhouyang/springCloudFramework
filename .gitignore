@@ -5,3 +5,16 @@
 */target
 */target/**
 **/.DS_Store
+.idea/
+api/target
+auth/target
+cache/target
+core/target
+data/target
+util/target
+api/.DS_Store
+auth/.DS_Store
+cache/.DS_Store
+core/.DS_Store
+data/.DS_Store
+util/.DS_Store
