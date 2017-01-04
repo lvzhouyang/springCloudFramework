@@ -39,7 +39,7 @@ public class MapperDecryptInterceptor implements Interceptor {
                 }
             }
         });
-        return invocation.proceed();
+        return objects;
     }
 
     @Override
