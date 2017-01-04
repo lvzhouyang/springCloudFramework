@@ -56,7 +56,8 @@ public class MapperDecryptInterceptor implements Interceptor {
         try {
             Object value = ReflectUtil.getValueByProperty(object, field.getName());
             field.setAccessible(true);
-            field.set(object, EncryptUtil.decrypt(value + ""));
+            String decrypt = EncryptUtil.decrypt(value + "");
+            field.set(object, decrypt);
         } catch (Exception e) {
             logger.error("字段解密失败!", e);
         }
