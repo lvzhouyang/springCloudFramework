@@ -9,27 +9,33 @@ import java.lang.annotation.*;
 
 /**
  * Created by ccg on 2017/1/4.
- *
+ * <p>
  * 该注解封装了 RestController 和 RequestMapping
- *
+ * <p>
  * 添加默认配置前缀 "/api" 用于远程的API调用
- *
+ * <p>
  * 配置可更改在@RestApiController(自定义)
- *
  */
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @RestController
 @RequestMapping
 public @interface RestApiController {
-    String name()                      default "";
-    @AliasFor("path") String[] value() default { "/api" };
-    @AliasFor("value") String[] path() default { "/api" };
-    RequestMethod[] method()           default {};
-    String[] params()                  default {};
-    String[] headers()                 default {};
-    String[] consumes()                default {};
-    String[] produces()                default {};
+    String name() default "";
+
+    @AliasFor("path") String[] value() default {"/api"};
+
+    @AliasFor("value") String[] path() default {"/api"};
+
+    RequestMethod[] method() default {};
+
+    String[] params() default {};
+
+    String[] headers() default {};
+
+    String[] consumes() default {};
+
+    String[] produces() default {};
 }
 
