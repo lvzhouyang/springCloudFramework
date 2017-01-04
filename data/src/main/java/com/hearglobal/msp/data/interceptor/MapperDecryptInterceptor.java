@@ -59,7 +59,7 @@ public class MapperDecryptInterceptor implements Interceptor {
             String decrypt = EncryptUtil.decrypt(value + "");
             field.set(object, decrypt);
         } catch (Exception e) {
-            logger.error("字段解密失败!", e);
+            logger.error("字段解密失败!");
         }
     }
 }
