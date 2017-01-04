@@ -15,12 +15,49 @@ public class DataSourceProperties {
     private String url;
     private String username;
     private String password;
-    private int maxActive = 100;
+    private int maxActive = 256;
     private int maxIdle = 8;
-    private int minIdle = 8;
-    private int initialSize = 10;
-    private String validationQuery;
+    private int minIdle = 16;
+    private int initialSize = 16;
+    private long maxWait = 3000;
+    private long timeBetweenEvictionRunsMillis = 60000;
+    private long minEvictableIdleTimeMillis = 300000;
+    private String validationQuery = "SELECT 1";
+    private Integer supportUtf8mb4 = 0;
     private String mapperLocations;
+
+
+    public Integer getSupportUtf8mb4() {
+        return supportUtf8mb4;
+    }
+
+    public void setSupportUtf8mb4(Integer supportUtf8mb4) {
+        this.supportUtf8mb4 = supportUtf8mb4;
+    }
+
+    public long getMinEvictableIdleTimeMillis() {
+        return minEvictableIdleTimeMillis;
+    }
+
+    public void setMinEvictableIdleTimeMillis(long minEvictableIdleTimeMillis) {
+        this.minEvictableIdleTimeMillis = minEvictableIdleTimeMillis;
+    }
+
+    public long getTimeBetweenEvictionRunsMillis() {
+        return timeBetweenEvictionRunsMillis;
+    }
+
+    public void setTimeBetweenEvictionRunsMillis(long timeBetweenEvictionRunsMillis) {
+        this.timeBetweenEvictionRunsMillis = timeBetweenEvictionRunsMillis;
+    }
+
+    public long getMaxWait() {
+        return maxWait;
+    }
+
+    public void setMaxWait(long maxWait) {
+        this.maxWait = maxWait;
+    }
 
     public String getMapperLocations() {
         return mapperLocations;

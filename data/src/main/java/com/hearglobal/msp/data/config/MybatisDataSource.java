@@ -1,8 +1,10 @@
 package com.hearglobal.msp.data.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.google.common.collect.Lists;
 import com.hearglobal.msp.core.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -21,6 +23,7 @@ import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by lvzhouyang on 16/12/12.
@@ -45,6 +48,7 @@ public class MybatisDataSource {
         DataSourceProperties config = dataSourceProperties;
         this.pool = new DruidDataSource();
         this.pool.setDriverClassName(config.getDriverClassName());
+        //基本属性 url、user、password
         // check
         if (StringUtils.isEmpty(config.getUrl())){
             logger.error("请配置数据库连接!");
@@ -61,10 +65,29 @@ public class MybatisDataSource {
         if (config.getPassword() != null) {
             this.pool.setPassword(config.getPassword());
         }
+        // 配置初始化大小、最小、最大
         this.pool.setInitialSize(config.getInitialSize());
-        this.pool.setMaxActive(config.getMaxActive());
         this.pool.setMinIdle(config.getMinIdle());
+        this.pool.setMaxActive(config.getMaxActive());
+        // 配置获取连接等待超时的时间
+        this.pool.setMaxWait(config.getMaxWait());
+        // 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        this.pool.setTimeBetweenEvictionRunsMillis(config.getTimeBetweenEvictionRunsMillis());
+        // 配置一个连接在池中最小生存的时间，单位是毫秒
+        this.pool.setMinEvictableIdleTimeMillis(config.getMinEvictableIdleTimeMillis());
+        this.pool.setTestWhileIdle(true);
+        this.pool.setTestOnBorrow(false);
         this.pool.setValidationQuery(config.getValidationQuery());
+        // 支持utf8mb4编码
+        if (config.getSupportUtf8mb4().equals(NumberUtils.INTEGER_ONE)){
+            List<String> initSqls = Lists.newArrayList();
+            initSqls.add("SET NAMES utf8mb4");
+            this.pool.setConnectionInitSqls(initSqls);
+            logger.info("数据库连接支持Utf8mb4编码");
+        }else {
+            logger.info("数据库连接不支持Utf8mb4编码,如需要支持请配置supportUtf8mb4属性为1");
+        }
+
         try {
             this.pool.setFilters("!stat,wall,log4j");
         } catch (SQLException e) {
@@ -96,6 +119,8 @@ public class MybatisDataSource {
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource());
+        transactionManager.setDefaultTimeout(5);
+        return transactionManager;
     }
 }
