@@ -153,8 +153,7 @@ public class ControllerInterceptor {
             return true;
         }
 
-        if (e instanceof RuntimeException || e instanceof IllegalArgumentException || e instanceof NullPointerException
-                || e instanceof Error) {
+        if (e instanceof RuntimeException || e instanceof Error) {
             return false;
         }
         return true;

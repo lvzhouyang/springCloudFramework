@@ -3,8 +3,11 @@ package com.hearglobal.msp.data.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
 import com.hearglobal.msp.core.exception.BaseException;
+import com.hearglobal.msp.data.interceptor.MapperDecryptInterceptor;
+import com.hearglobal.msp.data.interceptor.MapperEncryptInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,6 +22,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -49,7 +53,6 @@ public class MybatisDataSource {
         this.pool = new DruidDataSource();
         this.pool.setDriverClassName(config.getDriverClassName());
         //基本属性 url、user、password
-        // check
         if (StringUtils.isEmpty(config.getUrl())){
             logger.error("请配置数据库连接!");
             throw new BaseException("数据库连接初始化失败!请配置数据库连接!");
@@ -114,6 +117,10 @@ public class MybatisDataSource {
             throw new BaseException("请配置Mapper文件扫描目录!");
         }
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(dataSourceProperties.getMapperLocations()));
+        // 添加默认拦截器
+        Interceptor[] interceptors = {new MapperEncryptInterceptor(),new MapperDecryptInterceptor()};
+        sqlSessionFactoryBean.setPlugins(interceptors);
+
         return sqlSessionFactoryBean.getObject();
     }
 

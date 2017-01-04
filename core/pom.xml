@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.hearglobal.msp</groupId>
             <artifactId>util</artifactId>
-            <version>${hearglobal.msp.util.version}</version>
+            <version>0.0.2-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>

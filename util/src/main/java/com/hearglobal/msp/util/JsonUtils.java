@@ -53,7 +53,7 @@ public class JsonUtils {
         }
         return sw.toString();
     }
-
+    @SuppressWarnings("unchecked")
     public static Map<String, Object> object2Map(Object o) {
         return OBJECT_MAPPER.convertValue(o,Map.class);
     }

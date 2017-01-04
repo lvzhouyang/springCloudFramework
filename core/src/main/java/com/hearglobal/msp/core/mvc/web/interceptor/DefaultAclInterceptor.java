@@ -25,7 +25,7 @@ public class DefaultAclInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         String uri = this.getUri(httpServletRequest);
-        if (!uri.endsWith(".ajax") && (uri.indexOf('.') != -1 || uri.indexOf("/cron/") != -1)) {
+        if (!uri.endsWith(".ajax") && (uri.indexOf('.') != -1 || uri.contains("/cron/"))) {
             return;
         }
         long time = AppThreadCache.getStartTime();
