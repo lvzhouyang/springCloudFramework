@@ -58,7 +58,7 @@ public class MapperEncryptInterceptor implements Interceptor {
             field.setAccessible(true);
             field.set(object, EncryptUtil.encrypt(value + ""));
         } catch (Exception e) {
-            logger.error("字段加密失败!",e);
+            logger.debug("字段加密失败!");
         }
     }
 }

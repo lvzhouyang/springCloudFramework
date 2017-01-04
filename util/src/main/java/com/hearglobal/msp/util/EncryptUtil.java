@@ -8,6 +8,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -18,7 +20,7 @@ import sun.misc.BASE64Encoder;
 public class EncryptUtil {
     // 密钥是16位长度的byte[]进行Base64转换后得到的字符串
     public static String key = "LmMGStGtOpF4xNyvYt54EQ==";
-
+    private static final Logger log = LoggerFactory.getLogger(EncryptUtil.class);
     /**
      * <li>
      * 方法名称:encrypt</li> <li>
@@ -34,14 +36,14 @@ public class EncryptUtil {
             // 取需要加密内容的utf-8编码。
             encrypt = xmlStr.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
         // 取MD5Hash码，并组合加密数组
         byte[] md5Hasn = null;
         try {
             md5Hasn = EncryptUtil.MD5Hash(encrypt, 0, encrypt.length);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
         // 组合消息体
         byte[] totalByte = EncryptUtil.addMD5(md5Hasn, encrypt);
@@ -58,7 +60,7 @@ public class EncryptUtil {
         try {
             temp = EncryptUtil.DES_CBC_Encrypt(totalByte, deskey, ivParam);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
 
         // 使用Base64加密后返回
@@ -88,7 +90,7 @@ public class EncryptUtil {
         try {
             encBuf = decoder.decodeBuffer(xmlStr);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
 
         // 取密钥和偏转向量
@@ -104,7 +106,7 @@ public class EncryptUtil {
         try {
             temp = EncryptUtil.DES_CBC_Decrypt(encBuf, deskey, ivParam);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
 
         // 进行解密后的md5Hash校验
@@ -112,7 +114,7 @@ public class EncryptUtil {
         try {
             md5Hash = EncryptUtil.MD5Hash(temp, 16, temp.length - 16);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
 
         // 进行解密校检
@@ -374,7 +376,7 @@ public class EncryptUtil {
         try {
             buf = decoder.decodeBuffer(encryptKey);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug("加密失败!");
         }
         // 前8位为key
         int i;
@@ -385,9 +387,5 @@ public class EncryptUtil {
         for (i = 0; i < iv.length; i++) {
             iv[i] = buf[i + 8];
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-
     }
 }
