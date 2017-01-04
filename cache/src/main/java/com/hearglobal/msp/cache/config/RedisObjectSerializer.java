@@ -13,6 +13,8 @@ public class RedisObjectSerializer implements RedisSerializer<Object> {
     private Converter<Object, byte[]> serializer = new SerializingConverter();
     private Converter<byte[], Object> deserializer = new DeserializingConverter();
     static final byte[] EMPTY_ARRAY = new byte[0];
+
+    @Override
     public Object deserialize(byte[] bytes) {
         if (isEmpty(bytes)) {
             return null;
@@ -23,6 +25,8 @@ public class RedisObjectSerializer implements RedisSerializer<Object> {
             throw new SerializationException("Cannot deserialize", ex);
         }
     }
+
+    @Override
     public byte[] serialize(Object object) {
         if (object == null) {
             return EMPTY_ARRAY;
@@ -33,6 +37,7 @@ public class RedisObjectSerializer implements RedisSerializer<Object> {
             return EMPTY_ARRAY;
         }
     }
+
     private boolean isEmpty(byte[] data) {
         return (data == null || data.length == 0);
     }
