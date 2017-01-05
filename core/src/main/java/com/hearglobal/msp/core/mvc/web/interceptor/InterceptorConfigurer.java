@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
+ * 自定义拦截器配置
  * Created by lvzhouyang on 16/12/14.
  */
 @Configuration

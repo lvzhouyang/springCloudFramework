@@ -42,6 +42,7 @@ public class WebApplication {
                 .directModelSubstitute(LocalDateTime.class, java.util.Date.class)
                 .select()
                 .apis(requestHandler -> {
+                    assert requestHandler != null;
                     String packageName = requestHandler.getHandlerMethod().getMethod()
                             .getDeclaringClass().getPackage().getName();
                     return packageName.startsWith("com.hearglobal.") && packageName.contains(".web");

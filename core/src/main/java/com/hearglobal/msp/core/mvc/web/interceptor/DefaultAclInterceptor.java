@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 鉴权拦截器
+ * 请求时间记录
  * Created by lvzhouyang on 16/12/14.
  */
 public class DefaultAclInterceptor implements HandlerInterceptor {
