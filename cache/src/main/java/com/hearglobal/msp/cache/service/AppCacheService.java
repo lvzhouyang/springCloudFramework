@@ -55,17 +55,13 @@ public class AppCacheService {
 
         try {
             redisObjectTemplate.opsForValue().get(key);
-        } catch (Exception th) {
-            //缓存cache不应该影响应用提供服务
-            logger.error(th.getMessage(), th);
-        }
-
-        if (value == null) {
-            logger.warn("Failed to get object from key [" + key + "] by redisObjectTemplate");
-            return null;
-        } else {
             logger.debug("Get object from key [" + key + "] by redisObjectTemplate ->" + ToStringBuilder.reflectionToString(value));
             return value;
+        } catch (Exception th) {
+            //缓存cache不应该影响应用提供服务
+            logger.warn("Failed to get object from key [" + key + "] by redisObjectTemplate");
+            logger.error(th.getMessage(), th);
+            return null;
         }
     }
 

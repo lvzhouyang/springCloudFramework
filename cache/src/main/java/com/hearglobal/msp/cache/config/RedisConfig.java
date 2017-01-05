@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig extends CachingConfigurerSupport {
 
-    protected Logger logger = LoggerFactory.getLogger(RedisConfig.class);
+    private Logger logger = LoggerFactory.getLogger(RedisConfig.class);
     @Autowired
     private RedisProperties redisProperties;
 
@@ -97,6 +97,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
+    @SuppressWarnings("unchecked")
     private void setSerializer(StringRedisTemplate template) {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
