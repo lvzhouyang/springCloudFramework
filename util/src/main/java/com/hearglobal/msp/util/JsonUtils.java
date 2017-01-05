@@ -85,8 +85,7 @@ public class JsonUtils {
     public static <T> List<T> json2List(String json,Class<T> clazz) throws IOException {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
 
-        List<T> list = OBJECT_MAPPER.readValue(json, type);
-        return list;
+        return OBJECT_MAPPER.readValue(json, type);
     }
 
 
@@ -105,8 +104,7 @@ public class JsonUtils {
 
     public static <T> T node2Object(JsonNode jsonNode, Class<T> clazz) {
         try {
-            T t = OBJECT_MAPPER.treeToValue(jsonNode, clazz);
-            return t;
+            return OBJECT_MAPPER.treeToValue(jsonNode, clazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("将 Json 转换为对象时异常,数据是:" + jsonNode.toString(), e);
         }

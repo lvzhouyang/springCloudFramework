@@ -18,15 +18,17 @@ import sun.misc.BASE64Encoder;
  * 加密常用类
  */
 public class EncryptUtil {
+    private static final Logger log = LoggerFactory.getLogger(EncryptUtil.class);
+
     // 密钥是16位长度的byte[]进行Base64转换后得到的字符串
     public static String key = "LmMGStGtOpF4xNyvYt54EQ==";
-    private static final Logger log = LoggerFactory.getLogger(EncryptUtil.class);
+
+
     /**
-     * <li>
-     * 方法名称:encrypt</li> <li>
+     * 方法名称:encrypt
      * 加密方法
-     * @param xmlStr
-     *            需要加密的消息字符串
+     *
+     * @param xmlStr 需要加密的消息字符串
      * @return 加密后的字符串
      */
     public static String encrypt(String xmlStr) {
@@ -68,18 +70,10 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:encrypt</li> <li>
-     * 功能描述:
+     * 方法名称:decrypt
+     * 功能描述:解密方法
      *
-     * <pre>
-     * 解密方法
-     * </pre>
-     *
-     * </li>
-     *
-     * @param xmlStr
-     *            需要解密的消息字符串
+     * @param xmlStr 需要解密的消息字符串
      * @return 解密后的字符串
      * @throws Exception
      */
@@ -130,22 +124,13 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:TripleDES_CBC_Encrypt</li> <li>
+     * 方法名称:TripleDES_CBC_Encrypt
      * 功能描述:
-     *
-     * <pre>
      * 经过封装的三重DES/CBC加密算法，如果包含中文，请注意编码。
-     * </pre>
      *
-     * </li>
-     *
-     * @param sourceBuf
-     *            需要加密内容的字节数组。
-     * @param deskey
-     *            KEY 由24位字节数组通过SecretKeySpec类转换而成。
-     * @param ivParam
-     *            IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
+     * @param sourceBuf 需要加密内容的字节数组。
+     * @param deskey    KEY 由24位字节数组通过SecretKeySpec类转换而成。
+     * @param ivParam   IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
      * @return 加密后的字节数组
      * @throws Exception
      */
@@ -163,22 +148,13 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:TripleDES_CBC_Decrypt</li> <li>
+     * 方法名称:TripleDES_CBC_Decrypt
      * 功能描述:
-     *
-     * <pre>
      * 经过封装的三重DES / CBC解密算法
-     * </pre>
      *
-     * </li>
-     *
-     * @param sourceBuf
-     *            需要解密内容的字节数组
-     * @param deskey
-     *            KEY 由24位字节数组通过SecretKeySpec类转换而成。
-     * @param ivParam
-     *            IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
+     * @param sourceBuf 需要解密内容的字节数组
+     * @param deskey    KEY 由24位字节数组通过SecretKeySpec类转换而成。
+     * @param ivParam   IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
      * @return 解密后的字节数组
      * @throws Exception
      */
@@ -197,22 +173,13 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:DES_CBC_Encrypt</li> <li>
+     * 方法名称:DES_CBC_Encrypt
      * 功能描述:
-     *
-     * <pre>
      * 经过封装的DES/CBC加密算法，如果包含中文，请注意编码。
-     * </pre>
      *
-     * </li>
-     *
-     * @param sourceBuf
-     *            需要加密内容的字节数组。
-     * @param deskey
-     *            KEY 由8位字节数组通过SecretKeySpec类转换而成。
-     * @param ivParam
-     *            IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
+     * @param sourceBuf 需要加密内容的字节数组。
+     * @param deskey    KEY 由8位字节数组通过SecretKeySpec类转换而成。
+     * @param ivParam   IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
      * @return 加密后的字节数组
      * @throws Exception
      */
@@ -230,22 +197,13 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:DES_CBC_Decrypt</li> <li>
+     * 方法名称:DES_CBC_Decrypt
      * 功能描述:
-     *
-     * <pre>
      * 经过封装的DES/CBC解密算法。
-     * </pre>
      *
-     * </li>
-     *
-     * @param sourceBuf
-     *            需要解密内容的字节数组
-     * @param deskey
-     *            KEY 由8位字节数组通过SecretKeySpec类转换而成。
-     * @param ivParam
-     *            IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
+     * @param sourceBuf 需要解密内容的字节数组
+     * @param deskey    KEY 由8位字节数组通过SecretKeySpec类转换而成。
+     * @param ivParam   IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
      * @return 解密后的字节数组
      * @throws Exception
      */
@@ -264,22 +222,13 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:MD5Hash</li> <li>
+     * 方法名称:MD5Hash
      * 功能描述:
-     *
-     * <pre>
      * MD5，进行了简单的封装，以适用于加，解密字符串的校验。
-     * </pre>
      *
-     * </li>
-     *
-     * @param buf
-     *            需要MD5加密字节数组。
-     * @param offset
-     *            加密数据起始位置。
-     * @param length
-     *            需要加密的数组长度。
+     * @param buf    需要MD5加密字节数组。
+     * @param offset 加密数据起始位置。
+     * @param length 需要加密的数组长度。
      * @return
      * @throws Exception
      */
@@ -291,18 +240,11 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:byte2hex</li> <li>
+     * 方法名称:byte2hex
      * 功能描述:
-     *
-     * <pre>
      * 字节数组转换为二行制表示
-     * </pre>
      *
-     * </li>
-     *
-     * @param inStr
-     *            需要转换字节数组。
+     * @param inStr 需要转换字节数组。
      * @return 字节数组的二进制表示。
      */
     public static String byte2hex(byte[] inStr) {
@@ -323,20 +265,12 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:addMD5</li> <li>
+     * 方法名称:addMD5
      * 功能描述:
-     *
-     * <pre>
      * MD校验码 组合方法，前16位放MD5Hash码。 把MD5验证码byte[]，加密内容byte[]组合的方法。
-     * </pre>
      *
-     * </li>
-     *
-     * @param md5Byte
-     *            加密内容的MD5Hash字节数组。
-     * @param bodyByte
-     *            加密内容字节数组
+     * @param md5Byte  加密内容的MD5Hash字节数组。
+     * @param bodyByte 加密内容字节数组
      * @return 组合后的字节数组，比加密内容长16个字节。
      */
     public static byte[] addMD5(byte[] md5Byte, byte[] bodyByte) {
@@ -356,14 +290,8 @@ public class EncryptUtil {
     }
 
     /**
-     * <li>
-     * 方法名称:getKeyIV</li> <li>
+     * 方法名称:getKeyIV
      * 功能描述:
-     *
-     * <pre>
-     *
-     * </pre>
-     * </li>
      *
      * @param encryptKey
      * @param key

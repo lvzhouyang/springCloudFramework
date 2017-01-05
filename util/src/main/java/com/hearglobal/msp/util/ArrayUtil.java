@@ -6,7 +6,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 封装数组/list 与string的各种转换操作
@@ -46,10 +50,10 @@ final public class ArrayUtil {
         for (Object id : list) {
             if (idList.indexOf(id) >= 0) {
                 continue;
-            } else {
-                buf.append("," + "\"" + id + "\"");
-                idList.add(id);
             }
+
+            buf.append("," + "\"").append(id).append("\"");
+            idList.add(id);
         }
 
         String bufs = " (" + buf.toString().substring(1) + ") ";
@@ -72,14 +76,12 @@ final public class ArrayUtil {
         for (Object id : arr) {
             if (idList.indexOf(id) >= 0) {
                 continue;
-            } else {
-                buf.append("," + "\"" + id + "\"");
-                idList.add(id);
             }
+            buf.append("," + "\"").append(id).append("\"");
+            idList.add(id);
         }
 
-        String bufs = " (" + buf.toString().substring(1) + ") ";
-        return bufs;
+        return " (" + buf.toString().substring(1) + ") ";
     }
 
     /**
@@ -111,9 +113,8 @@ final public class ArrayUtil {
     }
 
     public static <T> String getFieldSqlString(List<T> elements, String fieldName) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        List<Object> objectlist = getFieldValueList(elements, fieldName);
-        String sql = getUniqueSqlString(objectlist);
-        return sql;
+        List<Object> objectList = getFieldValueList(elements, fieldName);
+        return getUniqueSqlString(objectList);
     }
 
     /**
@@ -133,7 +134,7 @@ final public class ArrayUtil {
             return null;
         }
 
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = Lists.newArrayList();
         for (T e : elements) {
             Class ownerClass = e.getClass();
             Field field = ownerClass.getField(fieldName);
@@ -164,15 +165,11 @@ final public class ArrayUtil {
             return null;
         }
 
-        Set<String> set = new HashSet<String>();
-        for (T e : list) {
-            if (e != null) {
-                set.add(e.toString());
-            }
-        }
+        Set<String> set = Sets.newHashSet();
+        set.addAll(list.stream().filter(e -> e != null).map(Object::toString).collect(Collectors.toList()));
         StringBuilder buf = new StringBuilder();
         for (String e : set) {
-            buf.append(split + e);
+            buf.append(split).append(e);
         }
         return buf.substring(split.length());
     }

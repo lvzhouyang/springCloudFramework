@@ -72,9 +72,8 @@ public class ReflectUtil {
      */
     public static Method getSetMethod4GetMethod(Method getMethod, Class<?> clazz) {
         String setMethodName = getMethod.getName().replaceFirst("get", "set");
-        Method setMethod = ReflectionUtils.findMethod(clazz, setMethodName,
+        return ReflectionUtils.findMethod(clazz, setMethodName,
                 getMethod.getReturnType());
-        return setMethod;
     }
 
     /**
@@ -87,8 +86,7 @@ public class ReflectUtil {
      */
     public static Method getGetMethod4SetMethod(Method setMethod, Class<?> clazz) {
         String getMethodName = setMethod.getName().replaceFirst("set", "get");
-        Method getMethod = ReflectionUtils.findMethod(clazz, getMethodName);
-        return getMethod;
+        return ReflectionUtils.findMethod(clazz, getMethodName);
     }
 
     /**
@@ -205,8 +203,8 @@ public class ReflectUtil {
      */
     private static Class<?> getClass(String className) throws ClassNotFoundException {
         Class<?> clazz = null;
-        Class<?>[] clazzes = new Class<?>[]{byte.class, short.class, int.class, long.class, char.class, boolean.class, float.class, double.class};
-        for (Class<?> c : clazzes) {
+        Class<?>[] classes = new Class<?>[]{byte.class, short.class, int.class, long.class, char.class, boolean.class, float.class, double.class};
+        for (Class<?> c : classes) {
             if (className.equals(c.toString())) {
                 clazz = c;
                 break;

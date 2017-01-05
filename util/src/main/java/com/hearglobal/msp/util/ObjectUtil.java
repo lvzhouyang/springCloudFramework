@@ -126,9 +126,9 @@ public class ObjectUtil {
                 for (Object o : (Object[]) obj) {
                     if (o.getClass().isPrimitive() || o instanceof String || o instanceof Integer
                             || o instanceof Long || o instanceof Boolean) {
-                        sb.append(o + ",");
+                        sb.append(o).append(",");
                     } else {
-                        sb.append(toString(o) + ",");
+                        sb.append(toString(o)).append(",");
                     }
                 }
             }
@@ -136,11 +136,11 @@ public class ObjectUtil {
                 field.setAccessible(true);
                 Object object = field.get(obj);
                 if (object != null) {
-                    sb.append("\"" + field.getName() + "\":");
+                    sb.append("\"").append(field.getName()).append("\":");
                     if (object instanceof String) {
-                        sb.append("\"" + object + "\",");
+                        sb.append("\"").append(object).append("\",");
                     } else {
-                        sb.append(object + ",");
+                        sb.append(object).append(",");
                     }
                 }
             }
@@ -166,9 +166,9 @@ public class ObjectUtil {
         }
         for (Object obj : objs) {
             if (obj.getClass().isPrimitive()) {
-                sb.append(obj + ",");
+                sb.append(obj).append(",");
             } else {
-                sb.append(toString(obj) + ",");
+                sb.append(toString(obj)).append(",");
             }
         }
         return sb.length() == 0 ? "[]" : "[" + sb.substring(0, sb.length() - 1) + "]";
@@ -198,7 +198,7 @@ public class ObjectUtil {
         }
         for (Object key : map.entrySet()) {
             Object value = map.get(key);
-            sb.append("\"" + toString(key) + "\":" + toString(value) + ",");
+            sb.append("\"").append(toString(key)).append("\":").append(toString(value)).append(",");
         }
         return sb.length() == 0 ? "{}" : "{" + sb.substring(0, sb.length() - 1) + "}";
     }
@@ -209,10 +209,8 @@ public class ObjectUtil {
     public static boolean isSameObject(Object obj1, Object obj2) {
         if (obj1 == null && obj2 == null) {
             return true;
-        } else if (obj1 != null && obj2 != null) {
-            return obj1.equals(obj2);
-        } else {
-            return false;
+        } else{
+            return obj1 != null && obj2 != null && obj1.equals(obj2);
         }
     }
 
