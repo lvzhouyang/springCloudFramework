@@ -16,7 +16,7 @@ import java.lang.annotation.*;
  *
  * 设置默认事务超时为5s 超时抛异常 并且异常可以自定义 但是一般设为默认
  *
- * 配置事务的读写性
+ * 配置事务的读写性 为可读写
  *
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -24,7 +24,7 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 @Transactional
-public @interface TransactionCustom {
+public @interface TransactionWrite {
     
     //指定事务管理者的名称 默认为"" 可以自己指定
     
