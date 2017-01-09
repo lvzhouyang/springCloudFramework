@@ -122,4 +122,10 @@ public class JsonUtils {
         }
     }
 
+    public static boolean validate(String input) {
+        input = input.trim();
+        boolean ret = new JsonValidator().validate(input);
+        return ret;
+    }
+
 }
