@@ -1,5 +1,4 @@
 package com.hearglobal.msp.util;
-
 import org.junit.Test;
 
 import static com.hearglobal.msp.util.StringUtil.camelhumpToUnderline;
@@ -50,6 +49,5 @@ public class StringTest {
         String str = "Admin_guest";
         System.out.println(StringUtil.firstToLower(str));
     }
-    
-    
 }
+
