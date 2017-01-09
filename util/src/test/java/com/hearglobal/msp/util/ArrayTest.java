@@ -76,7 +76,7 @@ public class ArrayTest {
     }
     
     @Test
-    //测试拼接给定字符串到集合中的每个元素
+    //测试拼接给定字符串到集合中的每个元素并组成一个string
     public void testlist2UniqStr() {
         List<String> list = new ArrayList<>();
         list.add("123");

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
-     * 正在匹配
+     * 正则匹配
      * @param originStr
      * @param matchStr
      * @return
