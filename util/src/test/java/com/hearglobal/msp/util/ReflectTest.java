@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 /**
  * Created by ccg on 2017/1/9.
  *
- * Random
+ * The tests for ReflectUtils
  *
  */
 public class ReflectTest {
