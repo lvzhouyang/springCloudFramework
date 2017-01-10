@@ -10,6 +10,9 @@ import java.util.Map;
 
 /**
  * Created by ccg on 2017/1/8.
+ *
+ * The tests for ObjectUtils
+ *
  */
 public class ObjectTest {
 

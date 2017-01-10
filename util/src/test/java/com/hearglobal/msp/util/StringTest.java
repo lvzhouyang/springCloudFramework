@@ -5,6 +5,9 @@ import static com.hearglobal.msp.util.StringUtil.camelhumpToUnderline;
 
 /**
  * Created by ccg on 2017/1/8.
+ *
+ * The tests for StringUtils
+ *
  */
 public class StringTest {
     @Test

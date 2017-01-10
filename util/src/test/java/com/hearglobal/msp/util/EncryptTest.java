@@ -4,6 +4,9 @@ import org.junit.Test;
 
 /**
  * Created by lvzhouyang on 17/1/4.
+ *
+ * The tests for EncryptUtils
+ *
  */
 public class EncryptTest {
 

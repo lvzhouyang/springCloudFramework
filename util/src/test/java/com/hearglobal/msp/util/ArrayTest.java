@@ -10,6 +10,9 @@ import java.util.List;
 
 /**
  * Created by lvzhouyang on 16/12/16.
+ *
+ * The tests for ArrayUtils
+ *
  */
 public class ArrayTest {
 
