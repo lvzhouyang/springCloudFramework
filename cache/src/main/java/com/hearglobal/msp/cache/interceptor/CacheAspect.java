@@ -2,7 +2,7 @@ package com.hearglobal.msp.cache.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.hearglobal.msp.cache.annotation.HearCache;
+import com.hearglobal.msp.cache.annotation.MspCache;
 import com.hearglobal.msp.cache.service.IHedis;
 import com.hearglobal.msp.util.ReflectUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -34,14 +34,14 @@ public class CacheAspect {
     private IHedis appCacheService;
 
 
-    @Around("execution(* *.*(..)) && @annotation(com.hearglobal.msp.cache.annotation.HearCache)")
+    @Around("execution(* *.*(..)) && @annotation(com.hearglobal.msp.cache.annotation.MspCache)")
     public Object checkPrivilege(ProceedingJoinPoint j) throws Throwable {
         // 获得传入参数
         Object[] args = j.getArgs();
         // 方法对象
         Method m = ReflectUtil.getMethod(j);
         // 方法的cache注解
-        HearCache cache = AnnotationUtils.findAnnotation(m, HearCache.class);
+        MspCache cache = AnnotationUtils.findAnnotation(m, MspCache.class);
         int keepSecond = cache.keepSecond();
         boolean reCache = cache.reCache();
         String cacheKey = cache.cacheKey();

@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface HearCache {
+public @interface MspCache {
 
   /**
    * 在缓存中保留的时间，单位 秒<br/>
