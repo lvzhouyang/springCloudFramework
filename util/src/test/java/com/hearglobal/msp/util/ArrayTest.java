@@ -55,7 +55,7 @@ public class ArrayTest {
     }
 
     @Test
-    //测试拼接给定字符串到集合中的每个元素并组成一个string
+    //获取元素唯一的格式为(1,2,3,4)用于sql的string
     public void testlist2UniqStr() {
         List<String> list = new ArrayList<>();
         list.add("123");
