@@ -33,7 +33,7 @@ public class ObjectTest {
     }
 
     @Test
-    //测试有没有空值的属性
+    //判断是否有不为空的属性值
     public void hasnullTest() {
         System.out.println(ObjectUtil.hasNonNullProperty(user));
     }
