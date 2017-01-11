@@ -1,6 +1,7 @@
 package com.hearglobal.msp.cache.service;
 
 import com.hearglobal.msp.cache.config.RedisConfig;
+import com.hearglobal.msp.util.ObjectUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,21 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 封装缓存操作 服务
  * Created by lvzhouyang on 16/12/22.
  */
 @Service
-public class AppCacheService {
+public class AppCacheService implements IHedis{
 
     // 缓存超时时间，单位：秒 ,默认1天
     private static final int DEFAULT_EXPIRE_TIME = 60 * 60 * 24;
     private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
     @Autowired
-    private RedisTemplate<String, Object> redisObjectTemplate;
+    private RedisTemplate<Serializable, Object> redisObjectTemplate;
 
     /**
      * 设置缓存数据，指定超时时间
@@ -30,8 +32,9 @@ public class AppCacheService {
      * @param key
      * @param value
      */
+    @Override
     public void set(String key, int expireTime, Object value) {
-        redisObjectTemplate.opsForValue().set(key, value, expireTime);
+        redisObjectTemplate.opsForValue().set(key, value, expireTime, TimeUnit.SECONDS);
     }
 
     /**
@@ -40,8 +43,9 @@ public class AppCacheService {
      * @param key
      * @param value
      */
+    @Override
     public void set(String key, Object value) {
-        redisObjectTemplate.opsForValue().set(key, value, DEFAULT_EXPIRE_TIME);
+        this.set(key,DEFAULT_EXPIRE_TIME,value);
     }
 
     /**
@@ -50,11 +54,12 @@ public class AppCacheService {
      * @param key
      * @return
      */
+    @Override
     public Object get(String key) {
         Object value = null;
 
         try {
-            redisObjectTemplate.opsForValue().get(key);
+            value = redisObjectTemplate.opsForValue().get(key);
             logger.debug("Get object from key [" + key + "] by redisObjectTemplate ->" + ToStringBuilder.reflectionToString(value));
             return value;
         } catch (Exception th) {
@@ -70,18 +75,9 @@ public class AppCacheService {
      *
      * @param key
      */
+    @Override
     public void delete(String key) {
         redisObjectTemplate.delete(key);
-    }
-
-    /**
-     * 批量取缓存
-     *
-     * @param keys
-     * @return
-     */
-    public List<Object> multiGet(List<String> keys) {
-        return redisObjectTemplate.opsForValue().multiGet(keys);
     }
 
     /**
@@ -91,7 +87,8 @@ public class AppCacheService {
      * @param value
      * @return
      */
-    public void listPush(String key, String value) {
+    @Override
+    public void listPush(String key, Object value) {
         redisObjectTemplate.opsForList().rightPush(key, value);
     }
 
@@ -101,6 +98,7 @@ public class AppCacheService {
      * @param key
      * @return
      */
+    @Override
     public Object listPop(String key) {
         return redisObjectTemplate.opsForList().leftPop(key);
     }
@@ -111,6 +109,7 @@ public class AppCacheService {
      * @param key
      * @return
      */
+    @Override
     public Long listLen(String key) {
         return redisObjectTemplate.opsForList().size(key);
     }
@@ -122,6 +121,7 @@ public class AppCacheService {
      * @param length
      * @return
      */
+    @Override
     public Long incr(String key, Long length){
         return redisObjectTemplate.opsForValue().increment(key,length);
     }
@@ -131,6 +131,7 @@ public class AppCacheService {
      * @param key
      * @return
      */
+    @Override
     public Long incr(String key){
         return incr(key,1L);
     }

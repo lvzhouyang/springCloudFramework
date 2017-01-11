@@ -23,16 +23,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-import java.lang.reflect.Method;
+import java.io.Serializable;
 
 /**
  * Created by lvzhouyang on 16/12/14.
  */
 @Configuration
 @EnableCaching
-@EnableRedisHttpSession
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig extends CachingConfigurerSupport {
 
@@ -109,8 +107,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 
     @Bean
-    public RedisTemplate<String, Object> redisObjectTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public RedisTemplate<Serializable, Object> redisObjectTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<Serializable, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new RedisObjectSerializer());

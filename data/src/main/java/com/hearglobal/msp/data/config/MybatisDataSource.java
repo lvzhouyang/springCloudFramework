@@ -36,7 +36,7 @@ import java.util.List;
 @EnableConfigurationProperties(DataSourceProperties.class)
 @EnableTransactionManagement
 //mybaits dao 搜索路径
-@MapperScan("com.hearglobal.**.mapper")
+@MapperScan("com.**.**.mapper")
 public class MybatisDataSource {
 
     private final Logger logger = LoggerFactory.getLogger(MybatisDataSource.class);
