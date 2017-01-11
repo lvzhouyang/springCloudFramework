@@ -56,7 +56,7 @@ public class CacheAspect {
         }
         if (!StringUtils.hasLength(cacheKey)) {
             cacheKey = m.getDeclaringClass().toString() + "#" + m.getName() + this.getCachekey(argsList.toArray());
-            log.info("cache - original key:{}", cacheKey);
+            log.debug("cache - original key:{}", cacheKey);
         }
         Object rtn = appCacheService.get(cacheKey);
         if (rtn == null || reCache) {
@@ -66,7 +66,7 @@ public class CacheAspect {
                     (rtn instanceof Map && ((Map<?, ?>) rtn).keySet().size() == 0) ||
                     (rtn.getClass().isArray() && ((Object[]) rtn).length == 0)) {
             } else {
-                log.info("cache into medis");
+                log.debug("cache into medis");
                 appCacheService.set(cacheKey, keepSecond, rtn);
             }
         }
