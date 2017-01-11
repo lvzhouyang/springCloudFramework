@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Transactional
 @Service
-public @interface TransactionReadService {
+public @interface MspService {
     @AliasFor("transactionManager")
     String value() default "";
 
