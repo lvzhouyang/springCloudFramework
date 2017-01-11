@@ -35,6 +35,12 @@ public class DateTest {
     }
 
     @Test
+    //string 转 date sec24
+    public void string2DateSecond24() {
+        System.out.println(DateUtil.string2DateSecond24(dateStr));
+    }
+
+    @Test
     //秒转时间
     public void secondsToString() {
         System.out.println(DateUtil.secondsToString(secondInt));
@@ -47,15 +53,34 @@ public class DateTest {
     }
 
     @Test
-    //UnixTime 转 date
+    //当前时间的秒数
     public void fromUnixTime() {
         System.out.println(DateUtil.fromUnixTime(secondInt));
     }
 
     @Test
+    //UnixTime 转 date
+    public void unixTime() {
+        System.out.println(DateUtil.unixTime());
+    }
+
+
+    @Test
     //date 格式化为 天00：00：00
     public void toDay() {
         System.out.println(DateUtil.toDay(date));
+    }
+
+    @Test
+    // 根据传入的日期（天）字符串得到对应的Unixtime
+    public void day2Unixtime() {
+        System.out.println(DateUtil.day2Unixtime(dateStr));
+    }
+
+    @Test
+    //date 格式化为yyyyMMdd
+    public void Date2IntDay() {
+        System.out.println(DateUtil.Date2IntDay(date));
     }
 
     @Test
@@ -82,6 +107,13 @@ public class DateTest {
     //string 转换为时间戳
     public void stringToTimestamp() {
         System.out.println(DateUtil.stringToTimestamp(dateStr));
+    }
+
+    @Test
+    //列出起止时间字符串之间的时间字符串集合格式为年月日
+    public void dateBetween() {
+        String date1str = "2017-1-7";
+        System.out.println(DateUtil.dateBetween(date1str, dateStr));
     }
 
     @Test
