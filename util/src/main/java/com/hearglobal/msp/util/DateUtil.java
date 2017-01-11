@@ -183,7 +183,7 @@ public class DateUtil {
 
     /**
      * @param seconds
-     * @return 当前时间的秒数
+     * @return 距当前时间的秒数
      */
     public static String Date2StringSec(Integer seconds) {
         return Date2StringSec(fromUnixTime(seconds));
@@ -216,7 +216,7 @@ public class DateUtil {
     }
 
     /**
-     * 把表转换为Date
+     * 把秒转换为Date
      *
      * @param seconds
      * @return
