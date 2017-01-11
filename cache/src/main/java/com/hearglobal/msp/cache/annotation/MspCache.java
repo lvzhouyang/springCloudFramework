@@ -21,7 +21,15 @@ public @interface MspCache {
    */
   int keepSecond() default 60 * 60 * 24;
 
+  /**
+   * 自定义缓存key
+   * @return
+     */
   String cacheKey() default "";
 
+  /**
+   * 强制刷新
+   * @return
+     */
   boolean reCache() default false;
 }
