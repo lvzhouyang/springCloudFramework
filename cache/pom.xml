@@ -86,7 +86,7 @@
         <repository>
             <id>hg</id>
             <name>HG Releases</name>
-            <url>http://maven.hearglobal.com/content/repositories/release</url>
+            <url>http://maven.hearglobal.com/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>hg</id>
