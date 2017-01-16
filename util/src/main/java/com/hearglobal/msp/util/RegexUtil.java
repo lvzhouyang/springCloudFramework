@@ -45,7 +45,7 @@ public class RegexUtil {
     /**
      * 检查手机号
      */
-    public static final String phoneNumRgx = "(^0?[1][35][0-9]{9}$)";
+    public static final String phoneNumRgx = "(^0?[1][3578][0-9]{9}$)";
 
     /**
      * 固定电话
