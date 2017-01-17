@@ -1,15 +1,16 @@
 package com.hearglobal.msp.cache.service;
 
 import com.hearglobal.msp.cache.config.RedisConfig;
-import com.hearglobal.msp.util.ObjectUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -134,5 +135,63 @@ public class AppCacheService implements IHedis{
     @Override
     public Long incr(String key){
         return incr(key,1L);
+    }
+
+    /**
+     * 元素分数增加，delta是增量
+     * @param key
+     * @param value
+     * @param delta
+     * @return
+     */
+    @Override
+    public Double incrementScore(String key, Object value, double delta) {
+        return redisObjectTemplate.opsForZSet().incrementScore(key,value,delta);
+    }
+
+    /**
+     * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），正序
+     * @param key
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public Set<ZSetOperations.TypedTuple<Object>> rangeWithScores(String key, long start, long end) {
+        return redisObjectTemplate.opsForZSet().rangeWithScores(key,start,end);
+    }
+
+    /**
+     * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），倒序
+     * @param key
+     * @param start
+     * @param end
+     * @return
+     */
+    @Override
+    public Set<ZSetOperations.TypedTuple<Object>> reverseRangeWithScores(String key, long start, long end) {
+        return redisObjectTemplate.opsForZSet().reverseRangeWithScores(key,start,end);
+    }
+
+    /**
+     * 键为K的集合，value为obj的元素索引，正序
+     * @param key
+     * @param value
+     * @return
+     */
+    @Override
+    public Long rank(String key, Object value) {
+        return redisObjectTemplate.opsForZSet().rank(key,value);
+    }
+
+    /**
+     * 键为K的集合，value为obj的元素索引，倒序
+     * @param key
+     * @param value
+     * @return
+     */
+    @Override
+    public Long reverseRank(String key, Object value) {
+        return redisObjectTemplate.opsForZSet().rank(key,value);
     }
 }
