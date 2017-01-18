@@ -95,4 +95,11 @@ public interface IHedis {
     /**键为K的集合，value为obj的元素索引，倒序**/
     Long reverseRank(String key, Object value);
 
+    /**
+     * 获取键为key的集合，value为obj的元素分数
+     * @param key
+     * @param obj
+     * @return
+     */
+    Double score(String key,Object obj);
 }

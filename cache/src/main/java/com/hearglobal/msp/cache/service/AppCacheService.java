@@ -192,6 +192,13 @@ public class AppCacheService implements IHedis{
      */
     @Override
     public Long reverseRank(String key, Object value) {
-        return redisObjectTemplate.opsForZSet().rank(key,value);
+        return redisObjectTemplate.opsForZSet().reverseRank(key,value);
     }
+
+    @Override
+    public Double score(String key,Object value){
+        return redisObjectTemplate.opsForZSet().score(key,value);
+    }
+
+
 }
