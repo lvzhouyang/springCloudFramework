@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * Created by lvzhouyang on 16/12/22.
  */
 @Service
-public class AppCacheService implements IHedis{
+public class AppCacheService implements IHedis {
 
     // 缓存超时时间，单位：秒 ,默认1天
     private static final int DEFAULT_EXPIRE_TIME = 60 * 60 * 24;
@@ -46,7 +46,7 @@ public class AppCacheService implements IHedis{
      */
     @Override
     public void set(String key, Object value) {
-        this.set(key,DEFAULT_EXPIRE_TIME,value);
+        this.set(key, DEFAULT_EXPIRE_TIME, value);
     }
 
     /**
@@ -118,27 +118,30 @@ public class AppCacheService implements IHedis{
 
     /**
      * 增长指定大小
+     *
      * @param key
      * @param length
      * @return
      */
     @Override
-    public Long incr(String key, Long length){
-        return redisObjectTemplate.opsForValue().increment(key,length);
+    public Long incr(String key, Long length) {
+        return redisObjectTemplate.opsForValue().increment(key, length);
     }
 
     /**
      * 每次加一
+     *
      * @param key
      * @return
      */
     @Override
-    public Long incr(String key){
-        return incr(key,1L);
+    public Long incr(String key) {
+        return incr(key, 1L);
     }
 
     /**
      * 元素分数增加，delta是增量
+     *
      * @param key
      * @param value
      * @param delta
@@ -146,11 +149,12 @@ public class AppCacheService implements IHedis{
      */
     @Override
     public Double incrementScore(String key, Object value, double delta) {
-        return redisObjectTemplate.opsForZSet().incrementScore(key,value,delta);
+        return redisObjectTemplate.opsForZSet().incrementScore(key, value, delta);
     }
 
     /**
      * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），正序
+     *
      * @param key
      * @param start
      * @param end
@@ -158,11 +162,12 @@ public class AppCacheService implements IHedis{
      */
     @Override
     public Set<ZSetOperations.TypedTuple<Object>> rangeWithScores(String key, long start, long end) {
-        return redisObjectTemplate.opsForZSet().rangeWithScores(key,start,end);
+        return redisObjectTemplate.opsForZSet().rangeWithScores(key, start, end);
     }
 
     /**
      * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），倒序
+     *
      * @param key
      * @param start
      * @param end
@@ -170,35 +175,45 @@ public class AppCacheService implements IHedis{
      */
     @Override
     public Set<ZSetOperations.TypedTuple<Object>> reverseRangeWithScores(String key, long start, long end) {
-        return redisObjectTemplate.opsForZSet().reverseRangeWithScores(key,start,end);
+        return redisObjectTemplate.opsForZSet().reverseRangeWithScores(key, start, end);
     }
 
     /**
      * 键为K的集合，value为obj的元素索引，正序
+     *
      * @param key
      * @param value
      * @return
      */
     @Override
     public Long rank(String key, Object value) {
-        return redisObjectTemplate.opsForZSet().rank(key,value);
+        return redisObjectTemplate.opsForZSet().rank(key, value);
     }
 
     /**
      * 键为K的集合，value为obj的元素索引，倒序
+     *
      * @param key
      * @param value
      * @return
      */
     @Override
     public Long reverseRank(String key, Object value) {
-        return redisObjectTemplate.opsForZSet().reverseRank(key,value);
+        return redisObjectTemplate.opsForZSet().reverseRank(key, value);
     }
 
     @Override
-    public Double score(String key,Object value){
-        return redisObjectTemplate.opsForZSet().score(key,value);
+    public Double score(String key, Object value) {
+        return redisObjectTemplate.opsForZSet().score(key, value);
     }
 
-
+    /**
+     * 键为K的集合元素个数
+     *
+     * @param key
+     */
+    @Override
+    public Long zsetSize(String key) {
+        return redisObjectTemplate.opsForZSet().size(key);
+    }
 }

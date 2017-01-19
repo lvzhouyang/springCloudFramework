@@ -102,4 +102,7 @@ public interface IHedis {
      * @return
      */
     Double score(String key,Object obj);
+
+    /**键为K的集合元素个数**/
+    Long zsetSize(String key);
 }
