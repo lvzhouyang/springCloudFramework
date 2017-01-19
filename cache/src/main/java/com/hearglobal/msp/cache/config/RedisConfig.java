@@ -40,7 +40,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 
     @Bean
-    //生成key键
     public KeyGenerator wiselyKeyGenerator() {
         return (target, method, params) -> {
             StringBuilder sb = new StringBuilder();
@@ -54,7 +53,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    //redis连接池的配置
     public JedisConnectionFactory redisConnectionFactory() {
         RedisProperties properties = redisProperties;
         this.checkProperties(properties);
@@ -82,7 +80,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    //配置缓存管理器,管理模版
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         // Number of seconds before expiration. Defaults to unlimited (0)

@@ -33,6 +33,7 @@ public class CacheAspect {
     @Resource
     private IHedis appCacheService;
 
+
     @Around("execution(* *.*(..)) && @annotation(com.hearglobal.msp.cache.annotation.MspCache)")
     public Object checkPrivilege(ProceedingJoinPoint j) throws Throwable {
         // 获得传入参数
@@ -72,7 +73,6 @@ public class CacheAspect {
         return rtn;
     }
 
-    //指定cachekey生成规则
     private String getCachekey(Object... o) {
         StringBuilder sb = new StringBuilder();
         for (Object object : o) {
