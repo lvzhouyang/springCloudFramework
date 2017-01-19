@@ -105,4 +105,10 @@ public interface IHedis {
 
     /**键为K的集合元素个数**/
     Long zsetSize(String key);
+
+    Long remove(String key, Object... values);
+
+    Long removeRange(String key, long start, long end);
+
+    Long removeRangeByScore(String key, double min, double max);
 }

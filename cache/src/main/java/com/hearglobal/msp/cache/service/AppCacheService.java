@@ -216,4 +216,21 @@ public class AppCacheService implements IHedis {
     public Long zsetSize(String key) {
         return redisObjectTemplate.opsForZSet().size(key);
     }
+
+    @Override
+    public Long remove(String key, Object... values) {
+        return redisObjectTemplate.opsForZSet().remove(key, values);
+    }
+
+    @Override
+    public Long removeRange(String key, long start, long end) {
+        return redisObjectTemplate.opsForZSet().remove(key, start, end);
+    }
+
+    @Override
+    public Long removeRangeByScore(String key, double min, double max) {
+        return redisObjectTemplate.opsForZSet().remove(key, min, max);
+    }
+
+
 }
