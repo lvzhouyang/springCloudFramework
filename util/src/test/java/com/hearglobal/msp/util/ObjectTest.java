@@ -10,9 +10,8 @@ import java.util.Map;
 
 /**
  * Created by ccg on 2017/1/8.
- *
+ * <p>
  * The tests for ObjectUtils
- *
  */
 public class ObjectTest {
 
@@ -55,11 +54,11 @@ public class ObjectTest {
         map = ObjectUtil.transBean2Map(uservo);
         System.out.println(map);
     }
+
     @Test
     //测试对象属性为null
-    public void isnullobj(){
+    public void isNullObj() {
         Map o = new HashMap();
-//        ObjectUtil.setDefault(o);
-        System.out.println(ObjectUtil.toString(ObjectUtil.isnullObj(o)));
+        System.out.println(ObjectUtil.toString(ObjectUtil.isNullObj(o)));
     }
 }

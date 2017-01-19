@@ -247,13 +247,15 @@ public class ObjectUtil {
     /**
      * 判断对象属性是否为空
      **/
-    public static boolean isnullObj(Object rtn) {
-        if (rtn == null ||
-                (rtn instanceof Collection && ((Collection<?>) rtn).size() == 0) ||
-                (rtn instanceof Map && ((Map<?, ?>) rtn).keySet().size() == 0) ||
-                (rtn.getClass().isArray() && ((Object[]) rtn).length == 0)
+    public static boolean isNullObj(Object obj) {
+        if (obj == null ||
+                (obj instanceof Collection && ((Collection<?>) obj).size() == 0) ||
+                (obj instanceof Map && ((Map<?, ?>) obj).keySet().size() == 0) ||
+                (obj.getClass().isArray() && ((Object[]) obj).length == 0)
                 ) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 }

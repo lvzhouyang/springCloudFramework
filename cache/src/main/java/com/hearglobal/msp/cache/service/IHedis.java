@@ -92,6 +92,9 @@ public interface IHedis {
     /**键为K的集合，value为obj的元素索引，正序**/
     Long rank(String key, Object value);
 
+    /**键为K的集合，value为obj的元素索引，倒序**/
+    Long reverseRank(String key, Object value);
+
     /**
      * 获取键为key的集合，value为obj的元素分数
      * @param key
@@ -100,9 +103,6 @@ public interface IHedis {
      */
     Double score(String key,Object obj);
 
-    /**键为K的集合，value为obj的元素索引，倒序**/
-    Long reverseRank(String key, Object value);
-
     /**键为K的集合元素个数**/
-    Long  zsetSize(String key);
+    Long zsetSize(String key);
 }
