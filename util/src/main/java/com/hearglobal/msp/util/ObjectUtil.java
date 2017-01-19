@@ -146,7 +146,7 @@ public class ObjectUtil {
             }
             return sb.length() == 0 ? "{}" : "{" + sb.substring(0, sb.length() - 1) + "}";
         } catch (Exception e) {
-            log.error("ObjectUtil toString error,{},{}",obj,e);
+            log.error("ObjectUtil toString error,{},{}", obj, e);
             return obj.toString();
         }
     }
@@ -209,7 +209,7 @@ public class ObjectUtil {
     public static boolean isSameObject(Object obj1, Object obj2) {
         if (obj1 == null && obj2 == null) {
             return true;
-        } else{
+        } else {
             return obj1 != null && obj2 != null && obj1.equals(obj2);
         }
     }
@@ -231,7 +231,7 @@ public class ObjectUtil {
             for (PropertyDescriptor property : propertyDescriptors) {
                 String key = property.getName();
                 // 过滤class属性
-                if (!StringUtils.equals("class",key)) {
+                if (!StringUtils.equals("class", key)) {
                     // 得到property对应的getter方法
                     Method getter = property.getReadMethod();
                     Object value = getter.invoke(obj);
@@ -242,5 +242,18 @@ public class ObjectUtil {
             log.error("transBean2Map Error " + e);
         }
         return map;
+    }
+
+    /**
+     * 判断对象属性是否为空
+     **/
+    public static boolean isnullObj(Object rtn) {
+        if (rtn == null ||
+                (rtn instanceof Collection && ((Collection<?>) rtn).size() == 0) ||
+                (rtn instanceof Map && ((Map<?, ?>) rtn).keySet().size() == 0) ||
+                (rtn.getClass().isArray() && ((Object[]) rtn).length == 0)
+                ) {
+            return true;
+        } else return false;
     }
 }

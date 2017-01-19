@@ -22,10 +22,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -42,8 +40,8 @@ public class MybatisDataSource {
     private final Logger logger = LoggerFactory.getLogger(MybatisDataSource.class);
     @Autowired
     private DataSourceProperties dataSourceProperties;
-    //mybaits mapper xml搜索路径
-    private static String mapperLocations = "classpath*:com/hearglobal/mapper/*.xml";
+//    //mybaits mapper xml搜索路径
+//    private static String mapperLocations = "classpath*:com/hearglobal/mapper/*.xml";
 
     private DruidDataSource pool;
 
@@ -117,7 +115,7 @@ public class MybatisDataSource {
             throw new BaseException("请配置Mapper文件扫描目录!");
         }
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(dataSourceProperties.getMapperLocations()));
-        // 添加默认拦截器
+        // 在这里添加默认拦截器
         Interceptor[] interceptors = {new MapperEncryptInterceptor(),new MapperDecryptInterceptor()};
         sqlSessionFactoryBean.setPlugins(interceptors);
 

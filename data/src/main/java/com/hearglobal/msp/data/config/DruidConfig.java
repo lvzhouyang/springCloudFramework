@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DruidConfig {
     @Bean
+    //配置可以注入第三方servlet的配置
     public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean reg = new ServletRegistrationBean();
         reg.setServlet(new StatViewServlet());
@@ -23,6 +24,7 @@ public class DruidConfig {
     }
 
     @Bean
+    //配置可以注入第三方的过滤器的配置
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new WebStatFilter());

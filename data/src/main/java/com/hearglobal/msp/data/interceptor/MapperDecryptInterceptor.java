@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * mybatis 拦截器 进行更新操作的加密
+ * mybatis 拦截器 进行更新操作的解密
  * User: lvzhouyang
  * Date: 15/9/15
  */

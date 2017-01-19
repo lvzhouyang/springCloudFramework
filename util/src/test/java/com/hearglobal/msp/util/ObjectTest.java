@@ -55,4 +55,11 @@ public class ObjectTest {
         map = ObjectUtil.transBean2Map(uservo);
         System.out.println(map);
     }
+    @Test
+    //测试对象属性为null
+    public void isnullobj(){
+        Map o = new HashMap();
+//        ObjectUtil.setDefault(o);
+        System.out.println(ObjectUtil.toString(ObjectUtil.isnullObj(o)));
+    }
 }
