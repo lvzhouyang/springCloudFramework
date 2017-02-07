@@ -40,8 +40,6 @@ public class MybatisDataSource {
     private final Logger logger = LoggerFactory.getLogger(MybatisDataSource.class);
     @Autowired
     private DataSourceProperties dataSourceProperties;
-//    //mybaits mapper xml搜索路径
-//    private static String mapperLocations = "classpath*:com/hearglobal/mapper/*.xml";
 
     private DruidDataSource pool;
 
