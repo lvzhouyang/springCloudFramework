@@ -10,7 +10,7 @@
 
     <packaging>jar</packaging>
     <properties>
-        <hearglobal.util.version>0.0.1-SNAPSHOT</hearglobal.util.version>
+        <hearglobal.util.version>0.0.5-SNAPSHOT</hearglobal.util.version>
     </properties>
 
     <dependencies>
