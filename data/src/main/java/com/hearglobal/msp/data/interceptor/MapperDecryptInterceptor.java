@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Stream;
 
 /**
  * mybatis 拦截器 进行更新操作的解密
@@ -29,16 +30,14 @@ public class MapperDecryptInterceptor implements Interceptor {
         //先执行，后处理
         List<Object> objects = (List<Object>) invocation.proceed();
         //获取字段中包含Encrypt的注解
-        objects.stream().filter(object -> object != null).forEach(object -> {
-            Field[] fields = object.getClass().getDeclaredFields();
-            for (Field f : fields) {
-                //获取字段中包含Encrypt的注解
-                Encrypt meta = f.getAnnotation(Encrypt.class);
-                if (meta != null) {
-                    this.decrypt(object, f);
-                }
-            }
-        });
+        objects.stream()
+                .filter(object -> object != null)
+                .forEach(object -> {
+                    Field[] fields = object.getClass().getDeclaredFields();
+                    Stream.of(fields)
+                            .filter(field -> field.getAnnotation(Encrypt.class) != null)
+                            .forEach(field -> decrypt(object, field));
+                });
         return objects;
     }
 

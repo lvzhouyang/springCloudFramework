@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -146,10 +147,11 @@ public class SqlHelper {
         }
 
         String sql = boundSql.getSql();
+        parameterMappings = parameterMappings.stream()
+                .filter(parameterMapping -> ParameterMode.OUT != parameterMapping.getMode())
+                .collect(Collectors.toList());
+
         for (ParameterMapping parameterMapping : parameterMappings) {
-            if (ParameterMode.OUT.equals(parameterMapping.getMode())) {
-                continue;
-            }
             Object value = fillValue(namespace, parameterMapping, params, configuration);
             JdbcType jdbcType = parameterMapping.getJdbcType();
             if (value == null && jdbcType == null) {
