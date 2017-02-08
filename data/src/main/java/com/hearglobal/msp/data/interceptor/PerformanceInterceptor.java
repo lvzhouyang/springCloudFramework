@@ -55,7 +55,6 @@ public class PerformanceInterceptor implements Interceptor {
         Object parameterObject = null;
         if (invocation.getArgs().length > 1) {
             parameterObject = invocation.getArgs()[1];
-//            ParamEncryptHelper.encrypt(parameterObject);
         }
 
         String statementId = mappedStatement.getId();
