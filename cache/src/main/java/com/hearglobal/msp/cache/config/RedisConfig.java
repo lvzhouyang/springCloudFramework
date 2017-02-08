@@ -25,6 +25,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by lvzhouyang on 16/12/14.
@@ -45,9 +46,8 @@ public class RedisConfig extends CachingConfigurerSupport {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
             sb.append(method.getName());
-            for (Object obj : params) {
-                sb.append(obj.toString());
-            }
+            Arrays.stream(params)
+                    .forEach(o -> sb.append(o.toString()));
             return sb.toString();
         };
     }

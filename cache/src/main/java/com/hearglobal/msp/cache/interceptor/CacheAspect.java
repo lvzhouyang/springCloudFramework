@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.hearglobal.msp.cache.annotation.MspCache;
 import com.hearglobal.msp.cache.service.IHedis;
+import com.hearglobal.msp.util.ObjectUtil;
 import com.hearglobal.msp.util.ReflectUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,6 +20,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * 缓存切面
@@ -47,10 +49,7 @@ public class CacheAspect {
         String cacheKey = cache.cacheKey();
 
         // 拼接参数
-        List<Object> argsList = Lists.newArrayList();
-        for (Object arg : args){
-            argsList.add(arg);
-        }
+        List<Object> argsList = Lists.newArrayList(args);
         if (keepSecond < 0) {
             return j.proceed(args);
         }
@@ -59,35 +58,39 @@ public class CacheAspect {
             log.debug("cache - original key:{}", cacheKey);
         }
         Object rtn = appCacheService.get(cacheKey);
-        if (rtn == null || reCache) {
-            rtn = j.proceed(args);
-            if (rtn == null ||
-                    (rtn instanceof Collection && ((Collection<?>) rtn).size() == 0) ||
-                    (rtn instanceof Map && ((Map<?, ?>) rtn).keySet().size() == 0) ||
-                    (rtn.getClass().isArray() && ((Object[]) rtn).length == 0)) {
-            } else {
-                log.debug("cache into medis");
-                appCacheService.set(cacheKey, keepSecond, rtn);
-            }
+        if (!ObjectUtil.isNullObj(rtn)
+                && !reCache) {
+            return rtn;
+        }
+        rtn = j.proceed(args);
+        if (rtn == null ||
+                (rtn instanceof Collection && ((Collection<?>) rtn).size() == 0) ||
+                (rtn instanceof Map && ((Map<?, ?>) rtn).keySet().size() == 0) ||
+                (rtn.getClass().isArray() && ((Object[]) rtn).length == 0)) {
+        } else {
+            log.debug("cache into medis");
+            appCacheService.set(cacheKey, keepSecond, rtn);
         }
         return rtn;
     }
 
     private String getCachekey(Object... o) {
         StringBuilder sb = new StringBuilder();
-        for (Object object : o) {
-            if (object == null) {
-                sb.append("NULL");
-            } else if (object instanceof Collection ||
-                    object instanceof Map ||
-                    object.getClass().isEnum() ||
-                    object.getClass().isArray()) {
-                sb.append(((JSON) JSON.toJSON(object)).toJSONString());
-            } else {
-                sb.append(object.toString());
-            }
-            sb.append("&*&");
-        }
+        Stream.of(o)
+                .forEach(object -> sb.append(object2KeyStr(object)).append("&*&"));
         return sb.toString();
+    }
+
+    private String object2KeyStr(Object object) {
+        if (object == null) {
+            return "NULL";
+        } else if (object instanceof Collection ||
+                object instanceof Map ||
+                object.getClass().isEnum() ||
+                object.getClass().isArray()) {
+            return ((JSON) JSON.toJSON(object)).toJSONString();
+        } else {
+            return object.toString();
+        }
     }
 }
