@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.util.stream.Stream;
 
 /**
  * The type Param encrypt helper.
@@ -45,13 +46,9 @@ public class ParamEncryptHelper {
         if (ArrayUtils.isEmpty(fields)) {
             return;
         }
-        for (Field f : fields) {
-            //获取字段中包含Encrypt的注解
-            Encrypt meta = f.getAnnotation(Encrypt.class);
-            if (meta != null) {
-                encryptField(object, f);
-            }
-        }
+        Stream.of(fields)
+                .filter(field -> field.getAnnotation(Encrypt.class) != null)
+                .forEach(field -> encryptField(object, field));
     }
 
     /**
