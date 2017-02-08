@@ -2,9 +2,13 @@ package com.hearglobal.msp.data.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
+import com.hearglobal.msp.core.context.ApplicationContextHolder;
 import com.hearglobal.msp.core.exception.BaseException;
 import com.hearglobal.msp.data.interceptor.MapperDecryptInterceptor;
 import com.hearglobal.msp.data.interceptor.MapperEncryptInterceptor;
+import com.hearglobal.msp.data.interceptor.PerformanceInterceptor;
+import com.hearglobal.msp.data.interceptor.QueryEncryptInterceptor;
+import com.hearglobal.msp.util.ArrayUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.ibatis.plugin.Interceptor;
@@ -49,11 +53,11 @@ public class MybatisDataSource {
         this.pool = new DruidDataSource();
         this.pool.setDriverClassName(config.getDriverClassName());
         //基本属性 url、user、password
-        if (StringUtils.isEmpty(config.getUrl())){
+        if (StringUtils.isEmpty(config.getUrl())) {
             logger.error("请配置数据库连接!");
             throw new BaseException("数据库连接初始化失败!请配置数据库连接!");
         }
-        if (StringUtils.isEmpty(config.getUsername())){
+        if (StringUtils.isEmpty(config.getUsername())) {
             logger.error("请配置数据库用户!");
             throw new BaseException("数据库连接初始化失败!请配置数据库用户!");
         }
@@ -78,19 +82,19 @@ public class MybatisDataSource {
         this.pool.setTestOnBorrow(false);
         this.pool.setValidationQuery(config.getValidationQuery());
         // 支持utf8mb4编码
-        if (config.getSupportUtf8mb4().equals(NumberUtils.INTEGER_ONE)){
+        if (config.getSupportUtf8mb4().equals(NumberUtils.INTEGER_ONE)) {
             List<String> initSqls = Lists.newArrayList();
             initSqls.add("SET NAMES utf8mb4");
             this.pool.setConnectionInitSqls(initSqls);
             logger.info("数据库连接支持Utf8mb4编码");
-        }else {
+        } else {
             logger.info("数据库连接不支持Utf8mb4编码,如需要支持请配置supportUtf8mb4属性为1");
         }
 
         try {
             this.pool.setFilters("!stat,wall,log4j");
         } catch (SQLException e) {
-            logger.error("数据库连接初始化失败!,{}",e);
+            logger.error("数据库连接初始化失败!,{}", e);
             throw new BaseException("数据库连接初始化失败!");
         }
         return this.pool;
@@ -108,14 +112,19 @@ public class MybatisDataSource {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        if (StringUtils.isEmpty(dataSourceProperties.getMapperLocations())){
+        if (StringUtils.isEmpty(dataSourceProperties.getMapperLocations())) {
             logger.error("请配置Mapper文件扫描目录!");
             throw new BaseException("请配置Mapper文件扫描目录!");
         }
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources(dataSourceProperties.getMapperLocations()));
         // 在这里添加默认拦截器
-        Interceptor[] interceptors = {new MapperEncryptInterceptor(),new MapperDecryptInterceptor()};
-        sqlSessionFactoryBean.setPlugins(interceptors);
+        List<Interceptor> interceptors = Lists.newArrayList();
+        interceptors.add(new MapperEncryptInterceptor());
+        interceptors.add(new MapperDecryptInterceptor());
+        interceptors.add(new QueryEncryptInterceptor());
+        interceptors.add(new PerformanceInterceptor());
+        Interceptor[] interceptorArray = new Interceptor[interceptors.size()];
+        sqlSessionFactoryBean.setPlugins(interceptors.toArray(interceptorArray));
 
         return sqlSessionFactoryBean.getObject();
     }

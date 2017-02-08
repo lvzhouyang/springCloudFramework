@@ -1,0 +1,70 @@
+package com.hearglobal.msp.data.util;/**
+ * Created by lvzhouyang on 17/2/8.
+ */
+
+import com.hearglobal.msp.data.annotation.Encrypt;
+import com.hearglobal.msp.util.EncryptUtil;
+import com.hearglobal.msp.util.ObjectUtil;
+import com.hearglobal.msp.util.ReflectUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
+
+/**
+ * The type Param encrypt helper.
+ * Description
+ *
+ * @author lvzhouyang
+ * @version 1.0
+ * @Description 针对参数 加密、界面的工具
+ * @create 2017 -02-08-下午12:01
+ * @since 2017.02.08
+ */
+public class ParamEncryptHelper {
+
+    /**
+     * The constant logger.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(ParamEncryptHelper.class);
+
+    /**
+     * Encrypt.
+     * 遍历参数,对参数进行加密
+     *
+     * @param object the object
+     * @since 2017.02.08
+     */
+    public static void encrypt(Object object) {
+
+        if (ObjectUtil.isNullObj(object)) {
+            return;
+        }
+        Field[] fields = object.getClass().getDeclaredFields();
+        for (Field f : fields) {
+            //获取字段中包含Encrypt的注解
+            Encrypt meta = f.getAnnotation(Encrypt.class);
+            if (meta != null) {
+                encryptField(object, f);
+            }
+        }
+    }
+
+    /**
+     * Encrypt field.
+     * 属性加密
+     *
+     * @param object the object
+     * @param field  the field
+     * @since 2017.02.08
+     */
+    private static void encryptField(Object object, Field field) {
+        try {
+            Object value = ReflectUtil.getValueByProperty(object, field.getName());
+            field.setAccessible(true);
+            field.set(object, EncryptUtil.encrypt(value + ""));
+        } catch (Exception e) {
+            logger.debug("字段加密失败!");
+        }
+    }
+}
