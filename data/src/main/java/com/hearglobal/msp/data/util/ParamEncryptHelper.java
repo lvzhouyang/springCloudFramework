@@ -6,6 +6,7 @@ import com.hearglobal.msp.data.annotation.Encrypt;
 import com.hearglobal.msp.util.EncryptUtil;
 import com.hearglobal.msp.util.ObjectUtil;
 import com.hearglobal.msp.util.ReflectUtil;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,9 @@ public class ParamEncryptHelper {
             return;
         }
         Field[] fields = object.getClass().getDeclaredFields();
+        if (ArrayUtils.isEmpty(fields)) {
+            return;
+        }
         for (Field f : fields) {
             //获取字段中包含Encrypt的注解
             Encrypt meta = f.getAnnotation(Encrypt.class);

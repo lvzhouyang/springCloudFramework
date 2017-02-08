@@ -1,9 +1,11 @@
 package com.hearglobal.msp.data.interceptor;
 
 import com.hearglobal.msp.core.context.ApplicationContextHolder;
-import com.hearglobal.msp.data.util.ParamEncryptHelper;
 import com.hearglobal.msp.util.ArrayUtil;
 import com.hearglobal.msp.util.ObjectUtil;
+import com.hearglobal.msp.util.StringUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -14,7 +16,6 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ import java.util.Properties;
 
 /**
  * @author lvzhouyang
- * @Description 性能监控
+ * @Description SQL执行性能监控
  * 只用于dev环境
  * @create 2017-02-08-上午10:11
  */
@@ -37,10 +38,11 @@ import java.util.Properties;
 public class PerformanceInterceptor implements Interceptor {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private final Logger logger = LoggerFactory.getLogger(MapperEncryptInterceptor.class);
+    private final Logger logger = LoggerFactory.getLogger(PerformanceInterceptor.class);
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
+        // 容器没初始化成功前不执行
         if (ObjectUtil.isNullObj(ApplicationContextHolder.context)) {
             return invocation.proceed();
         }
@@ -51,24 +53,23 @@ public class PerformanceInterceptor implements Interceptor {
         if (actProfile.length > 0 && !ArrayUtil.getUniqueSqlString(actProfile).contains("dev")) {
             return invocation.proceed();
         }
+
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         Object parameterObject = null;
         if (invocation.getArgs().length > 1) {
             parameterObject = invocation.getArgs()[1];
         }
-
+        // 获取语句
         String statementId = mappedStatement.getId();
         BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
         Configuration configuration = mappedStatement.getConfiguration();
         String sql = getSql(boundSql, parameterObject, configuration);
-
-        long start = System.currentTimeMillis();
-
+        // 计时 执行
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Object result = invocation.proceed();
-
-        long end = System.currentTimeMillis();
-        long timing = end - start;
-        logger.info("耗时:{}ms, - id:{} - Sql:{}", timing, statementId, sql);
+        stopWatch.split();
+        logger.info("PerformanceInterceptor SQL耗时:{}ms, - id:{} - Sql:{}", stopWatch.getSplitTime(), statementId, sql);
         return result;
     }
 
@@ -87,45 +88,49 @@ public class PerformanceInterceptor implements Interceptor {
     private String getSql(BoundSql boundSql, Object parameterObject, Configuration configuration) {
         String sql = boundSql.getSql().replaceAll("[\\s]+", " ");
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-        if (parameterMappings != null) {
-            for (int i = 0; i < parameterMappings.size(); i++) {
-                ParameterMapping parameterMapping = parameterMappings.get(i);
-                if (parameterMapping.getMode() != ParameterMode.OUT) {
-                    Object value;
-                    String propertyName = parameterMapping.getProperty();
-                    if (boundSql.hasAdditionalParameter(propertyName)) {
-                        value = boundSql.getAdditionalParameter(propertyName);
-                    } else if (parameterObject == null) {
-                        value = null;
-                    } else if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
-                        value = parameterObject;
-                    } else {
-                        MetaObject metaObject = configuration.newMetaObject(parameterObject);
-                        value = metaObject.getValue(propertyName);
-                    }
-                    sql = replacePlaceholder(sql, value);
-                }
+        if (CollectionUtils.isEmpty(parameterMappings)) {
+            return StringUtil.EMPTY;
+        }
+        for (ParameterMapping parameterMapping : parameterMappings) {
+            if (ParameterMode.OUT.equals(parameterMapping.getMode())) {
+                continue;
             }
+            Object value = fillInValue(boundSql, parameterMapping, parameterObject, configuration);
+            sql = replacePlaceholder(sql, value);
         }
         return sql;
     }
 
+    private Object fillInValue(BoundSql boundSql, ParameterMapping parameterMapping, Object parameterObject, Configuration configuration) {
+        String propertyName = parameterMapping.getProperty();
+        if (boundSql.hasAdditionalParameter(propertyName)) {
+            return boundSql.getAdditionalParameter(propertyName);
+        } else if (parameterObject == null) {
+            return null;
+        } else if (configuration.getTypeHandlerRegistry().hasTypeHandler(parameterObject.getClass())) {
+            return parameterObject;
+        } else {
+            MetaObject metaObject = configuration.newMetaObject(parameterObject);
+            return metaObject.getValue(propertyName);
+        }
+    }
+
 
     private String replacePlaceholder(String sql, Object propertyValue) {
-        String result;
-        if (propertyValue != null) {
-            if (propertyValue instanceof String) {
-                result = "'" + propertyValue + "'";
-            } else if (propertyValue instanceof Date) {
-                result = "'" + DATE_FORMAT.format(propertyValue) + "'";
-            } else {
-                result = propertyValue.toString();
-            }
-        } else {
-            result = "null";
+        StringBuilder result = new StringBuilder();
+        if (ObjectUtil.isNullObj(propertyValue)) {
+            return "null";
         }
-        return sql.replaceFirst("\\?", result);
+
+        if (propertyValue instanceof String) {
+            result.append("'").append(propertyValue).append("'");
+        } else if (propertyValue instanceof Date) {
+            result.append("'").append(DATE_FORMAT.format(propertyValue)).append("'");
+        } else {
+            result.append(propertyValue.toString());
+        }
+
+        return sql.replaceFirst("\\?", result.toString());
     }
 }
 

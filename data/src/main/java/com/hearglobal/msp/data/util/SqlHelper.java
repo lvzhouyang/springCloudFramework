@@ -1,5 +1,9 @@
 package com.hearglobal.msp.data.util;
 
+import com.google.common.collect.Maps;
+import com.hearglobal.msp.util.StringUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -7,19 +11,15 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
-import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
-import org.apache.ibatis.reflection.factory.ObjectFactory;
-import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +27,21 @@ import java.util.Map;
 /**
  * The type Sql helper.
  * 获取Mybatis查询sql工具
+ * 如果你想在代码中获取Mybatis方法的sql，你可以使用本工具
+ * 这个工具不需要你实际去执行Mybatis的查询方法就能得到sql
  *
  * @author lvzhouyang.
  * @version 1.0
  * @since 2017.02.08
  */
+@Component
 public class SqlHelper {
-    private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
-    private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
+
+    /**
+     * The Sql session factory.
+     */
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
 
     /**
      * 通过接口获取sql
@@ -44,35 +51,33 @@ public class SqlHelper {
      * @param args       the args
      * @return mapper sql
      */
-    public static String getMapperSql(Object mapper, String methodName, Object... args) {
+    public String getMapperSql(Object mapper, String methodName, Object... args) {
         MetaObject metaObject = SystemMetaObject.forObject(mapper);
-        SqlSession session = (SqlSession) metaObject.getValue("h.sqlSession");
         Class mapperInterface = (Class) metaObject.getValue("h.mapperInterface");
         String fullMethodName = mapperInterface.getCanonicalName() + "." + methodName;
-        if (args == null || args.length == 0) {
-            return getNamespaceSql(session, fullMethodName, null);
+        if (ArrayUtils.isEmpty(args)) {
+            return getNamespaceSql(fullMethodName, null);
         } else {
-            return getMapperSql(session, mapperInterface, methodName, args);
+            return getMapperSql(mapperInterface, methodName, args);
         }
     }
 
     /**
      * 通过Mapper方法名获取sql
      *
-     * @param session              the session
      * @param fullMapperMethodName the full mapper method name
      * @param args                 the args
      * @return mapper sql
      */
-    public static String getMapperSql(SqlSession session, String fullMapperMethodName, Object... args) {
-        if (args == null || args.length == 0) {
-            return getNamespaceSql(session, fullMapperMethodName, null);
+    public String getMapperSql(String fullMapperMethodName, Object... args) {
+        if (ArrayUtils.isEmpty(args)) {
+            return getNamespaceSql(fullMapperMethodName, null);
         }
         String methodName = fullMapperMethodName.substring(fullMapperMethodName.lastIndexOf('.') + 1);
         Class mapperInterface = null;
         try {
             mapperInterface = Class.forName(fullMapperMethodName.substring(0, fullMapperMethodName.lastIndexOf('.')));
-            return getMapperSql(session, mapperInterface, methodName, args);
+            return getMapperSql(mapperInterface, methodName, args);
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException("参数" + fullMapperMethodName + "无效！");
         }
@@ -81,20 +86,20 @@ public class SqlHelper {
     /**
      * 通过Mapper接口和方法名
      *
-     * @param session         the session
      * @param mapperInterface the mapper interface
      * @param methodName      the method name
      * @param args            the args
      * @return mapper sql
      */
-    public static String getMapperSql(SqlSession session, Class mapperInterface, String methodName, Object... args) {
+    public String getMapperSql(Class mapperInterface, String methodName, Object... args) {
         String fullMapperMethodName = mapperInterface.getCanonicalName() + "." + methodName;
-        if (args == null || args.length == 0) {
-            return getNamespaceSql(session, fullMapperMethodName, null);
+        if (ArrayUtils.isEmpty(args)) {
+            return getNamespaceSql(fullMapperMethodName, null);
         }
         Method method = getDeclaredMethods(mapperInterface, methodName);
-        Map params = new HashMap();
+        Map params = Maps.newHashMap();
         final Class<?>[] argTypes = method.getParameterTypes();
+
         for (int i = 0; i < argTypes.length; i++) {
             if (!RowBounds.class.isAssignableFrom(argTypes[i]) && !ResultHandler.class.isAssignableFrom(argTypes[i])) {
                 String paramName = "param" + String.valueOf(params.size() + 1);
@@ -108,60 +113,66 @@ public class SqlHelper {
                 params.putAll((Map) _params);
             }
         }
-        return getNamespaceSql(session, fullMapperMethodName, params);
+        return getNamespaceSql(fullMapperMethodName, params);
     }
 
 
     /**
      * 通过命名空间方式获取sql
      *
-     * @param session   the session
      * @param namespace the namespace
      * @return namespace sql
      */
-    public static String getNamespaceSql(SqlSession session, String namespace) {
-        return getNamespaceSql(session, namespace, null);
+    public String getNamespaceSql(String namespace) {
+        return getNamespaceSql(namespace, null);
     }
 
     /**
      * 通过命名空间方式获取sql
      *
-     * @param session   the session
      * @param namespace the namespace
      * @param params    the params
      * @return namespace sql
      */
-    public static String getNamespaceSql(SqlSession session, String namespace, Object params) {
+    public String getNamespaceSql(String namespace, Object params) {
         params = wrapCollection(params);
-        Configuration configuration = session.getConfiguration();
+        Configuration configuration = sqlSessionFactory.getConfiguration();
         MappedStatement mappedStatement = configuration.getMappedStatement(namespace);
-        TypeHandlerRegistry typeHandlerRegistry = mappedStatement.getConfiguration().getTypeHandlerRegistry();
         BoundSql boundSql = mappedStatement.getBoundSql(params);
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+
+        if (CollectionUtils.isEmpty(parameterMappings)) {
+            return StringUtil.EMPTY;
+        }
+
         String sql = boundSql.getSql();
-        if (parameterMappings != null) {
-            for (int i = 0; i < parameterMappings.size(); i++) {
-                ParameterMapping parameterMapping = parameterMappings.get(i);
-                if (parameterMapping.getMode() != ParameterMode.OUT) {
-                    Object value;
-                    String propertyName = parameterMapping.getProperty();
-                    if (boundSql.hasAdditionalParameter(propertyName)) {
-                        value = boundSql.getAdditionalParameter(propertyName);
-                    } else if (params == null) {
-                        value = null;
-                    } else if (typeHandlerRegistry.hasTypeHandler(params.getClass())) {
-                        value = params;
-                    } else {
-                        MetaObject metaObject = configuration.newMetaObject(params);
-                        value = metaObject.getValue(propertyName);
-                    }
-                    JdbcType jdbcType = parameterMapping.getJdbcType();
-                    if (value == null && jdbcType == null) jdbcType = configuration.getJdbcTypeForNull();
-                    sql = replaceParameter(sql, value, jdbcType, parameterMapping.getJavaType());
-                }
+        for (ParameterMapping parameterMapping : parameterMappings) {
+            if (ParameterMode.OUT.equals(parameterMapping.getMode())) {
+                continue;
             }
+            Object value = fillValue(namespace, parameterMapping, params, configuration);
+            JdbcType jdbcType = parameterMapping.getJdbcType();
+            if (value == null && jdbcType == null) {
+                jdbcType = configuration.getJdbcTypeForNull();
+            }
+            sql = replaceParameter(sql, value, jdbcType, parameterMapping.getJavaType());
         }
         return sql;
+    }
+
+    private Object fillValue(String namespace, ParameterMapping parameterMapping, Object params, Configuration configuration) {
+        MappedStatement mappedStatement = configuration.getMappedStatement(namespace);
+        BoundSql boundSql = mappedStatement.getBoundSql(params);
+        if (boundSql.hasAdditionalParameter(parameterMapping.getProperty())) {
+            return boundSql.getAdditionalParameter(parameterMapping.getProperty());
+        } else if (params == null) {
+            return null;
+        } else if (mappedStatement.getConfiguration().getTypeHandlerRegistry().hasTypeHandler(params.getClass())) {
+            return params;
+        } else {
+            MetaObject metaObject = configuration.newMetaObject(params);
+            return metaObject.getValue(parameterMapping.getProperty());
+        }
     }
 
     /**
@@ -172,10 +183,10 @@ public class SqlHelper {
      * @param value    the value
      * @param jdbcType the jdbc type
      * @param javaType the java type
-     * @return string
+     * @return string string
      * @since 2017.02.08
      */
-    private static String replaceParameter(String sql, Object value, JdbcType jdbcType, Class javaType) {
+    private String replaceParameter(String sql, Object value, JdbcType jdbcType, Class javaType) {
         String strValue = String.valueOf(value);
         if (jdbcType != null) {
             switch (jdbcType) {
@@ -216,7 +227,7 @@ public class SqlHelper {
      * @param methodName the method name
      * @return declared methods
      */
-    private static Method getDeclaredMethods(Class clazz, String methodName) {
+    private Method getDeclaredMethods(Class clazz, String methodName) {
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
@@ -234,7 +245,7 @@ public class SqlHelper {
      * @param paramName the param name
      * @return param name from annotation
      */
-    private static String getParamNameFromAnnotation(Method method, int i, String paramName) {
+    private String getParamNameFromAnnotation(Method method, int i, String paramName) {
         final Object[] paramAnnos = method.getParameterAnnotations()[i];
         for (Object paramAnno : paramAnnos) {
             if (paramAnno instanceof Param) {
@@ -248,16 +259,16 @@ public class SqlHelper {
      * 简单包装参数
      *
      * @param object the object
-     * @return object
+     * @return object object
      * @since 2017.02.08
      */
-    private static Object wrapCollection(final Object object) {
+    private Object wrapCollection(final Object object) {
         if (object instanceof List) {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = Maps.newHashMap();
             map.put("list", object);
             return map;
         } else if (object != null && object.getClass().isArray()) {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = Maps.newHashMap();
             map.put("array", object);
             return map;
         }
