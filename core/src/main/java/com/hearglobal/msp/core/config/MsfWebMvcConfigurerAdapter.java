@@ -37,7 +37,7 @@ public class MsfWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.clear();
         converters.add(getStringConverter());
-        converters.add(getJson());
+        converters.add(getJsonConverter());
     }
 
     /**
@@ -46,7 +46,7 @@ public class MsfWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
      *
      * @return the json
      */
-    private HttpMessageConverter getJson() {
+    private HttpMessageConverter getJsonConverter() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         List<MediaType> mediaTypes = Lists.newArrayList();
         mediaTypes.add(new MediaType("application", "json", UTF8));
