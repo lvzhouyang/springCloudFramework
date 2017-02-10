@@ -25,23 +25,23 @@ public class HttpRemoteService {
     public static String ERROR = "error";
 
     public <T> T invoke(Map<String, Object> response, TypeReference<T> typeReference) {
+
+        if (MapUtils.isEmpty(response)) {
+            throw new AppBusinessException("请求失败!");
+        }
+        Integer status = MapUtils.getInteger(response, STATUS);
+        // 请求失败的处理
+        if (ObjectUtil.isNullObj(status)
+                || status.equals(NumberUtils.INTEGER_ZERO)) {
+            Error error = (Error) MapUtils.getObject(response, ERROR);
+            throw new RemoteCallException(error, NumberUtils.toInt(error.getCode()));
+        }
+
+        String data = MapUtils.getString(response, DATA);
+        if (StringUtil.isEmpty(data)) {
+            throw new RemoteCallException(getDefaultError(), NumberUtils.toInt(getDefaultError().getCode()));
+        }
         try {
-            if (MapUtils.isEmpty(response)) {
-                throw new AppBusinessException("请求失败!");
-            }
-            Integer status = MapUtils.getInteger(response, STATUS);
-            // 请求失败的处理
-            if (ObjectUtil.isNullObj(status)
-                    || status.equals(NumberUtils.INTEGER_ZERO)) {
-                Error error = (Error) MapUtils.getObject(response, ERROR);
-                throw new RemoteCallException(error, NumberUtils.toInt(error.getCode()));
-            }
-
-            String data = MapUtils.getString(response, DATA);
-            if (StringUtil.isEmpty(data)) {
-                throw new RemoteCallException(getDefaultError(), NumberUtils.toInt(getDefaultError().getCode()));
-            }
-
             return (T) JSON.parseObject(data, typeReference);
         } catch (Exception e) {
             throw new RemoteCallException(getDefaultError(), NumberUtils.toInt(getDefaultError().getCode()));
