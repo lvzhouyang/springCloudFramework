@@ -1,6 +1,7 @@
 package com.hearglobal.msp.core.mvc;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Maps;
 import com.hearglobal.msp.api.CommonErrorCode;
 import com.hearglobal.msp.api.Error;
 import com.hearglobal.msp.api.ErrorCode;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -120,7 +122,11 @@ public class AppExceptionHandlerController extends ResponseEntityExceptionHandle
 
     private ResponseEntity<Object> createResponseEntity(String code, int httpStatus, String requestUri, String message) {
         Error error = new Error(code, requestUri, message);
-        String json = JsonUtils.object2Json(error);
+        Map<String, Object> ret = Maps.newHashMap();
+        ret.put("status", 0);
+        ret.put("error", error);
+        ret.put("msg", error.getMessage());
+        String json = JsonUtils.object2Json(ret);
         return ResponseEntity.status(HttpStatus.valueOf(httpStatus)).body(json);
 
     }

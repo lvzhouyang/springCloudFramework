@@ -1,5 +1,6 @@
 package com.hearglobal.msp.core.mvc;
 
+import com.google.common.collect.Maps;
 import com.hearglobal.msp.api.CommonErrorCode;
 import com.hearglobal.msp.api.Error;
 import com.hearglobal.msp.util.JsonUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Created by lvzhouyang on 16/12/14.
@@ -56,6 +58,10 @@ public class AppErrorController extends AbstractErrorController {
         HttpStatus status = getStatus(request);
         CommonErrorCode errorCode = CommonErrorCode.fromHttpStatus(status.value());
         Error error = new Error(errorCode.getCode(), request.getRequestURI(), status.getReasonPhrase());
-        return new ResponseEntity<>(JsonUtils.object2Json(error), status);
+        Map<String, Object> ret = Maps.newHashMap();
+        ret.put("status", 0);
+        ret.put("error", error);
+        ret.put("msg", error.getMessage());
+        return new ResponseEntity<>(JsonUtils.object2Json(ret), status);
     }
 }

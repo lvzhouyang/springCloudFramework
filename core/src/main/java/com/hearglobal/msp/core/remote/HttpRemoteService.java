@@ -27,12 +27,6 @@ public class HttpRemoteService {
 
     protected Logger logger = LoggerFactory.getLogger(HttpRemoteService.class);
 
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     @Autowired
     private RestTemplate restTemplate;
 
