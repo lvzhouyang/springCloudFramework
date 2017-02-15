@@ -13,6 +13,7 @@ public class AjaxResult {
 
     /**
      * 返回成功消息
+     *
      * @param msg
      * @return
      */
@@ -25,6 +26,7 @@ public class AjaxResult {
 
     /**
      * 返回成功默认消息
+     *
      * @return
      */
     public static Map<String, Object> createSuccessMap() {
@@ -36,6 +38,7 @@ public class AjaxResult {
 
     /**
      * 返回成功数据
+     *
      * @param data
      * @return
      */
@@ -46,8 +49,18 @@ public class AjaxResult {
         return ret;
     }
 
+
+    public static Map<String, Object> createAjaxSuccessMap(Object data, Page page) {
+        Map<String, Object> ret = Maps.newHashMap();
+        ret.put("status", 1);
+        ret.put("data", data);
+        ret.put("page", page);
+        return ret;
+    }
+
     /**
      * 返回成功消息和数据
+     *
      * @param data
      * @param msg
      * @return
@@ -62,6 +75,7 @@ public class AjaxResult {
 
     /**
      * 返回失败消息
+     *
      * @param msg
      * @return
      */
@@ -74,6 +88,7 @@ public class AjaxResult {
 
     /**
      * 返回失败数据
+     *
      * @param data
      * @return
      */
@@ -86,6 +101,7 @@ public class AjaxResult {
 
     /**
      * 返回失败消息和数据
+     *
      * @param data
      * @param msg
      * @return

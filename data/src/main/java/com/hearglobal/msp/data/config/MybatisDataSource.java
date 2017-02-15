@@ -1,14 +1,13 @@
 package com.hearglobal.msp.data.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
-import com.hearglobal.msp.core.context.ApplicationContextHolder;
 import com.hearglobal.msp.core.exception.BaseException;
 import com.hearglobal.msp.data.interceptor.MapperDecryptInterceptor;
 import com.hearglobal.msp.data.interceptor.MapperEncryptInterceptor;
 import com.hearglobal.msp.data.interceptor.PerformanceInterceptor;
 import com.hearglobal.msp.data.interceptor.QueryEncryptInterceptor;
-import com.hearglobal.msp.util.ArrayUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.ibatis.plugin.Interceptor;
@@ -123,6 +122,8 @@ public class MybatisDataSource {
         interceptors.add(new MapperDecryptInterceptor());
         interceptors.add(new QueryEncryptInterceptor());
         interceptors.add(new PerformanceInterceptor());
+        interceptors.add(new PageHelper());
+
         Interceptor[] interceptorArray = new Interceptor[interceptors.size()];
         sqlSessionFactoryBean.setPlugins(interceptors.toArray(interceptorArray));
 

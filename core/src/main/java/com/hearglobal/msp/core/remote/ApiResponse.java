@@ -2,6 +2,7 @@ package com.hearglobal.msp.core.remote;
 
 import com.google.common.collect.Maps;
 import com.hearglobal.msp.api.Error;
+import com.hearglobal.msp.api.Page;
 import com.hearglobal.msp.util.JsonUtils;
 
 import java.util.Map;
@@ -27,6 +28,14 @@ public class ApiResponse {
     public static Map<String, Object> createApiSuccessMap(Object data) {
         Map<String, Object> ret = Maps.newHashMap();
         ret.put("status", 1);
+        ret.put("data", JsonUtils.object2Json(data));
+        return ret;
+    }
+
+    public static Map<String, Object> createApiSuccessMap(Object data, Page page) {
+        Map<String, Object> ret = Maps.newHashMap();
+        ret.put("status", 1);
+        ret.put("page", page);
         ret.put("data", JsonUtils.object2Json(data));
         return ret;
     }

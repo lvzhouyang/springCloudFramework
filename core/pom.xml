@@ -17,7 +17,7 @@
         <springfox.version>2.5.0</springfox.version>
         <spring.boot.version>1.4.0.RELEASE</spring.boot.version>
         <spring.cloud.version>Camden.SR3</spring.cloud.version>
-        <hearglobal.msp.api.version>0.0.1-SNAPSHOT</hearglobal.msp.api.version>
+        <hearglobal.msp.api.version>0.0.2-SNAPSHOT</hearglobal.msp.api.version>
         <hearglobal.msp.util.version>0.0.1-SNAPSHOT</hearglobal.msp.util.version>
     </properties>
 
