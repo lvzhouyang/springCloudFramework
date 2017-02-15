@@ -62,6 +62,8 @@ public class Page implements Serializable {
 
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
+        this.totalPageNum = totalCount % perPageSize == 0 ? totalCount
+                / perPageSize : totalCount / perPageSize + 1;
     }
 
     public int getPerPageSize() {
