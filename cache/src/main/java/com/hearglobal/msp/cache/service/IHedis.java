@@ -129,7 +129,7 @@ public interface IHedis {
      * @param key
      * @return Long
      */
-    Long iHedisSetSize(String key);
+    Long setSize(String key);
 
     /**
      * 往ihedis 中set 添加元素
@@ -137,12 +137,12 @@ public interface IHedis {
      * @param value
      * @return
      */
-    Long addInIHedisSet(String key,Object... value);
+    Long setAdd(String key,Object... value);
 
     /**
      * 根据key 取 ihedis set
      * @param key
      * @return
      */
-    Set<Object> getIHedisSetByKey(String key);
+    Set<Object> getSet(String key);
 }
