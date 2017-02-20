@@ -232,5 +232,19 @@ public class AppCacheService implements IHedis {
         return redisObjectTemplate.opsForZSet().remove(key, min, max);
     }
 
+    @Override
+    public Long iHedisSetSize(String key){
+        return redisObjectTemplate.opsForSet().size(key);
+    }
+
+    @Override
+    public Long addInIHedisSet(String key, Object... value){
+        return redisObjectTemplate.opsForSet().add(key,value);
+    }
+
+    @Override
+    public Set<Object> getIHedisSetByKey(String key) {
+        return redisObjectTemplate.opsForSet().members(key);
+    }
 
 }
