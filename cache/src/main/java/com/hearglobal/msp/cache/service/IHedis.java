@@ -80,19 +80,29 @@ public interface IHedis {
      */
     Long incr(String key);
 
-    /**元素分数增加，delta是增量**/
+    /**
+     * 元素分数增加，delta是增量
+     **/
     Double incrementScore(String key, Object value, double delta);
 
-    /**键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），正序**/
-    Set<ZSetOperations.TypedTuple<Object>> rangeWithScores(String  key, long start, long end);
+    /**
+     * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），正序
+     **/
+    Set<ZSetOperations.TypedTuple<Object>> rangeWithScores(String key, long start, long end);
 
-    /**键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），倒序**/
-    Set<ZSetOperations.TypedTuple<Object>> reverseRangeWithScores(String  key, long start, long end);
+    /**
+     * 键为K的集合，索引start<=index<=end的元素子集，返回泛型接口（包括score和value），倒序
+     **/
+    Set<ZSetOperations.TypedTuple<Object>> reverseRangeWithScores(String key, long start, long end);
 
-    /**键为K的集合，value为obj的元素索引，正序**/
+    /**
+     * 键为K的集合，value为obj的元素索引，正序
+     **/
     Long rank(String key, Object value);
 
-    /**键为K的集合，value为obj的元素索引，倒序**/
+    /**
+     * 键为K的集合，value为obj的元素索引，倒序
+     **/
     Long reverseRank(String key, Object value);
 
     /**
@@ -103,7 +113,9 @@ public interface IHedis {
      */
     Double score(String key,Object obj);
 
-    /**键为K的集合元素个数**/
+    /**
+     * 键为K的集合元素个数
+     **/
     Long zsetSize(String key);
 
     Long remove(String key, Object... values);
@@ -111,4 +123,26 @@ public interface IHedis {
     Long removeRange(String key, long start, long end);
 
     Long removeRangeByScore(String key, double min, double max);
+
+    /**
+     * 查看ihedis 中set 集合的size
+     * @param key
+     * @return Long
+     */
+    Long setSize(String key);
+
+    /**
+     * 往ihedis 中set 添加元素
+     * @param key
+     * @param value
+     * @return
+     */
+    Long setAdd(String key,Object... value);
+
+    /**
+     * 根据key 取 ihedis set
+     * @param key
+     * @return
+     */
+    Set<Object> getSet(String key);
 }
