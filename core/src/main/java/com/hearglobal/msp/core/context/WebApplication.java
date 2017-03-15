@@ -53,7 +53,7 @@ public class WebApplication {
                     assert requestHandler != null;
                     String packageName = requestHandler.getHandlerMethod().getMethod()
                             .getDeclaringClass().getPackage().getName();
-                    return packageName.startsWith("com.hearglobal.") && packageName.contains(".controller");
+                    return packageName.contains("controller");
                 })
                 .paths(PathSelectors.any())
                 .build();
