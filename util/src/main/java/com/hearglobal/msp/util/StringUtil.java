@@ -6,14 +6,20 @@ import java.util.regex.Pattern;
 /**
  * 扩展StringUtil 工具类
  * Created by lvzhouyang on 16/12/20.
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 正则匹配
-     * @param originStr
-     * @param matchStr
-     * @return
+     *
+     * @param originStr the origin str
+     * @param matchStr  the match str
+     * @return boolean
+     * @since 2017.03.21
      */
     public static boolean regexMatch(String originStr, String matchStr){
         if (StringUtil.isEmpty(originStr)
@@ -30,10 +36,12 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 替换固定格式的字符串（支持正则表达式）
-     * @param str
-     * @param regex
-     * @param replacement
-     * @return
+     *
+     * @param str         the str
+     * @param regex       the regex
+     * @param replacement the replacement
+     * @return string
+     * @since 2017.03.21
      */
     public static String replaceAllWithRegex(String str, String regex, String replacement) {
         Pattern p = Pattern.compile(regex);
@@ -48,8 +56,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 将驼峰风格替换为下划线风格
-     * @param str
-     * @return
+     *
+     * @param str the str
+     * @return string
+     * @since 2017.03.21
      */
     public static String camelhumpToUnderline(String str) {
         Matcher matcher = Pattern.compile("[A-Z]").matcher(str);
@@ -65,8 +75,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 将下划线风格替换为驼峰风格
-     * @param str
-     * @return
+     *
+     * @param str the str
+     * @return string
+     * @since 2017.03.21
      */
     public static String underlineToCamelhump(String str) {
         Matcher matcher = Pattern.compile("_[a-z]").matcher(str);
@@ -82,8 +94,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 将字符串首字母大写
-     * @param str
-     * @return
+     *
+     * @param str the str
+     * @return string
+     * @since 2017.03.21
      */
     public static String firstToUpper(String str) {
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);
@@ -91,8 +105,10 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 将字符串首字母大写
-     * @param str
-     * @return
+     *
+     * @param str the str
+     * @return string
+     * @since 2017.03.21
      */
     public static String firstToLower(String str) {
         return Character.toLowerCase(str.charAt(0)) + str.substring(1);

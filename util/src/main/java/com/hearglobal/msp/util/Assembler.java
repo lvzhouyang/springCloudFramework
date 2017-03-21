@@ -11,14 +11,23 @@ import java.util.List;
 /**
  * domain vo对象属性转换
  * Created by lvzhouyang on 16/12/15.
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class Assembler {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LoggerFactory.getLogger(Assembler.class);
 
     /**
      * 从源对象 copy属性到目标对象
-     * @param fromObject
-     * @param toObject
+     *
+     * @param fromObject the from object
+     * @param toObject   the to object
+     * @since 2017.03.21
      */
     public static void assemble(Object fromObject, Object toObject) {
         BeanUtils.copyProperties(fromObject, toObject);
@@ -27,9 +36,11 @@ public class Assembler {
     /**
      * 从源对象 copy属性到目标对象
      * ignoreProperties 忽略的属性
-     * @param fromObject
-     * @param toObject
-     * @param ignoreProperties
+     *
+     * @param fromObject       the from object
+     * @param toObject         the to object
+     * @param ignoreProperties the ignore properties
+     * @since 2017.03.21
      */
     public static void assemble(Object fromObject, Object toObject, String... ignoreProperties) {
         BeanUtils.copyProperties(fromObject, toObject, ignoreProperties);
@@ -39,10 +50,12 @@ public class Assembler {
      * 从源List装配一个符合目标class类型的List.可以触发toObject的名称为
      * assembleTrigger的方法
      *
+     * @param <T>           the type parameter
      * @param fromList      源list
      * @param toClass       目标class
      * @param excludeFields 不装配的属性名称
-     * @return
+     * @return list list
+     * @since 2017.03.21
      */
     public static <T> List<T> assembleList2NewList(List<?> fromList,
                                                    Class<T> toClass,
@@ -70,10 +83,13 @@ public class Assembler {
      * 从源List装配一个符合目标class类型的List,可以触发toObject的名称为
      * assembleTrigger的方法
      *
+     * @param <T>           the type parameter
      * @param fromList      源List
      * @param toList        目标List
+     * @param toClass       the to class
      * @param excludeFields 不需要装配的属性
-     * @return
+     * @return list list
+     * @since 2017.03.21
      */
     public static <T> List<T> assembleList2List(List<?> fromList,
                                                 List<T> toList,

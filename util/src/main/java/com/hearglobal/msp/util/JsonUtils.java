@@ -14,13 +14,25 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Json utils.
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
+ */
 public class JsonUtils {
 
+    /**
+     * The constant OBJECT_MAPPER.
+     */
     public static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
 
     /**
      * 初始化ObjectMapper
-     * @return
+     *
+     * @return object mapper
+     * @since 2017.03.21
      */
     private static ObjectMapper createObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -34,6 +46,13 @@ public class JsonUtils {
         return objectMapper;
     }
 
+    /**
+     * 将一个object转换成json对象的字符串
+     *
+     * @param o the o
+     * @return the string
+     * @since 2017.03.21
+     */
     public static String object2Json(Object o) {
         StringWriter sw = new StringWriter();
         JsonGenerator gen = null;
@@ -53,6 +72,14 @@ public class JsonUtils {
         }
         return sw.toString();
     }
+
+    /**
+     * 将一个object转换成Map对象
+     *
+     * @param o the o
+     * @return the map
+     * @since 2017.03.21
+     */
     @SuppressWarnings("unchecked")
     public static Map<String, Object> object2Map(Object o) {
         return OBJECT_MAPPER.convertValue(o,Map.class);
@@ -62,9 +89,11 @@ public class JsonUtils {
     /**
      * 将 json 字段串转换为 对象.
      *
+     * @param <T>   the type parameter
      * @param json  字符串
      * @param clazz 需要转换为的类
-     * @return
+     * @return t
+     * @since 2017.03.21
      */
     public static <T> T json2Object(String json, Class<T> clazz) {
         try {
@@ -75,12 +104,14 @@ public class JsonUtils {
     }
 
     /**
-     *   将 json 字段串转换为 List.
-     * @param json
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws IOException
+     * 将 json 字段串转换为 List.
+     *
+     * @param <T>   the type parameter
+     * @param json  the json
+     * @param clazz the clazz
+     * @return list
+     * @throws IOException the io exception
+     * @since 2017.03.21
      */
     public static <T> List<T> json2List(String json,Class<T> clazz) throws IOException {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
@@ -90,18 +121,29 @@ public class JsonUtils {
 
 
     /**
-     *  将 json 字段串转换为 数据.
-     * @param json
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws IOException
+     * 将 json 字段串转换为 数据.
+     *
+     * @param <T>   the type parameter
+     * @param json  the json
+     * @param clazz the clazz
+     * @return t [ ]
+     * @throws IOException the io exception
+     * @since 2017.03.21
      */
     public static <T>  T[] json2Array(String json,Class<T[]> clazz) throws IOException {
         return OBJECT_MAPPER.readValue(json, clazz);
 
     }
 
+    /**
+     * 将一个JsonNode 转换成指定类型的对象
+     *
+     * @param <T>      the type parameter
+     * @param jsonNode the json node
+     * @param clazz    the clazz
+     * @return the t
+     * @since 2017.03.21
+     */
     public static <T> T node2Object(JsonNode jsonNode, Class<T> clazz) {
         try {
             return OBJECT_MAPPER.treeToValue(jsonNode, clazz);
@@ -110,6 +152,13 @@ public class JsonUtils {
         }
     }
 
+    /**
+     * 将一个object转换成JsonNode 对象
+     *
+     * @param o the o
+     * @return the json node
+     * @since 2017.03.21
+     */
     public static JsonNode object2Node(Object o) {
         try {
             if(o == null) {
@@ -122,6 +171,13 @@ public class JsonUtils {
         }
     }
 
+    /**
+     * Validate boolean.
+     *
+     * @param input the input
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static boolean validate(String input) {
         input = input.trim();
         boolean ret = new JsonValidator().validate(input);

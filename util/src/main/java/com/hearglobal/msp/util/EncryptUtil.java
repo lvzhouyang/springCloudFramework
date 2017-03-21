@@ -14,13 +14,22 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
- * 功能描述
  * 加密常用类
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class EncryptUtil {
+    /**
+     * The constant log.
+     */
     private static final Logger log = LoggerFactory.getLogger(EncryptUtil.class);
 
-    // 密钥是16位长度的byte[]进行Base64转换后得到的字符串
+    /**
+     * The constant key.
+     */
+// 密钥是16位长度的byte[]进行Base64转换后得到的字符串
     public static String key = "LmMGStGtOpF4xNyvYt54EQ==";
 
 
@@ -29,7 +38,8 @@ public class EncryptUtil {
      * 加密方法
      *
      * @param xmlStr 需要加密的消息字符串
-     * @return 加密后的字符串
+     * @return 加密后的字符串 string
+     * @since 2017.03.21
      */
     public static String encrypt(String xmlStr) {
         byte[] encrypt = null;
@@ -74,8 +84,9 @@ public class EncryptUtil {
      * 功能描述:解密方法
      *
      * @param xmlStr 需要解密的消息字符串
-     * @return 解密后的字符串
-     * @throws Exception
+     * @return 解密后的字符串 string
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static String decrypt(String xmlStr) throws Exception {
         // base64解码
@@ -131,8 +142,9 @@ public class EncryptUtil {
      * @param sourceBuf 需要加密内容的字节数组。
      * @param deskey    KEY 由24位字节数组通过SecretKeySpec类转换而成。
      * @param ivParam   IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
-     * @return 加密后的字节数组
-     * @throws Exception
+     * @return 加密后的字节数组 byte [ ]
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static byte[] TripleDES_CBC_Encrypt(byte[] sourceBuf,
                                                SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {
@@ -155,8 +167,9 @@ public class EncryptUtil {
      * @param sourceBuf 需要解密内容的字节数组
      * @param deskey    KEY 由24位字节数组通过SecretKeySpec类转换而成。
      * @param ivParam   IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
-     * @return 解密后的字节数组
-     * @throws Exception
+     * @return 解密后的字节数组 byte [ ]
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static byte[] TripleDES_CBC_Decrypt(byte[] sourceBuf,
                                                SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {
@@ -180,8 +193,9 @@ public class EncryptUtil {
      * @param sourceBuf 需要加密内容的字节数组。
      * @param deskey    KEY 由8位字节数组通过SecretKeySpec类转换而成。
      * @param ivParam   IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。
-     * @return 加密后的字节数组
-     * @throws Exception
+     * @return 加密后的字节数组 byte [ ]
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static byte[] DES_CBC_Encrypt(byte[] sourceBuf,
                                          SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {
@@ -204,8 +218,9 @@ public class EncryptUtil {
      * @param sourceBuf 需要解密内容的字节数组
      * @param deskey    KEY 由8位字节数组通过SecretKeySpec类转换而成。
      * @param ivParam   IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。
-     * @return 解密后的字节数组
-     * @throws Exception
+     * @return 解密后的字节数组 byte [ ]
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static byte[] DES_CBC_Decrypt(byte[] sourceBuf,
                                          SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {
@@ -229,8 +244,9 @@ public class EncryptUtil {
      * @param buf    需要MD5加密字节数组。
      * @param offset 加密数据起始位置。
      * @param length 需要加密的数组长度。
-     * @return
-     * @throws Exception
+     * @return byte [ ]
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static byte[] MD5Hash(byte[] buf, int offset, int length)
             throws Exception {
@@ -245,7 +261,8 @@ public class EncryptUtil {
      * 字节数组转换为二行制表示
      *
      * @param inStr 需要转换字节数组。
-     * @return 字节数组的二进制表示。
+     * @return 字节数组的二进制表示 。
+     * @since 2017.03.21
      */
     public static String byte2hex(byte[] inStr) {
         String stmp;
@@ -271,7 +288,8 @@ public class EncryptUtil {
      *
      * @param md5Byte  加密内容的MD5Hash字节数组。
      * @param bodyByte 加密内容字节数组
-     * @return 组合后的字节数组，比加密内容长16个字节。
+     * @return 组合后的字节数组 ，比加密内容长16个字节。
+     * @since 2017.03.21
      */
     public static byte[] addMD5(byte[] md5Byte, byte[] bodyByte) {
         int length = bodyByte.length + md5Byte.length;
@@ -293,9 +311,9 @@ public class EncryptUtil {
      * 方法名称:getKeyIV
      * 功能描述:
      *
-     * @param encryptKey
-     * @param key
-     * @param iv
+     * @param encryptKey the encrypt key
+     * @param key        the key
+     * @param iv         the iv
      */
     public static void getKeyIV(String encryptKey, byte[] key, byte[] iv) {
         // 密钥Base64解密

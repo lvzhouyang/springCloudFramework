@@ -23,15 +23,23 @@ import java.util.regex.Pattern;
 
 /**
  * 反射工具类
+ *
+ * @author lvzhouyang.
  * @version 1.0
+ * @since 2017.03.21
  */
 public class ReflectUtil {
+    /**
+     * The constant log.
+     */
     private final static Logger log = LoggerFactory.getLogger(ReflectUtil.class);
 
     /**
      * 得到一个类的所有get方法.不包含get()
-     * @param clazz
-     * @return
+     *
+     * @param clazz the clazz
+     * @return method [ ]
+     * @since 2017.03.21
      */
     public static Method[] getPublicGetMethods(Class<?> clazz) {
         Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -47,8 +55,10 @@ public class ReflectUtil {
 
     /**
      * 得到一个类的所有set方法.不包含set()
-     * @param clazz
-     * @return
+     *
+     * @param clazz the clazz
+     * @return method [ ]
+     * @since 2017.03.21
      */
     public static Method[] getPublicSetMethods(Class<?> clazz) {
         Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -63,12 +73,11 @@ public class ReflectUtil {
     }
 
     /**
-     * 
      * 得到get方法对应的set方法,get的返回值和set方法的参数必须一样
-     * @param
-     * @param getMethod
-     * @param clazz
-     * @return
+     *
+     * @param getMethod the get method
+     * @param clazz     the clazz
+     * @return set method 4 get method
      */
     public static Method getSetMethod4GetMethod(Method getMethod, Class<?> clazz) {
         String setMethodName = getMethod.getName().replaceFirst("get", "set");
@@ -77,12 +86,11 @@ public class ReflectUtil {
     }
 
     /**
-     * 
      * 得到set方法对应的get方法,get方法没有参数
-     * @param
-     * @param setMethod
-     * @param clazz
-     * @return
+     *
+     * @param setMethod the set method
+     * @param clazz     the clazz
+     * @return get method 4 set method
      */
     public static Method getGetMethod4SetMethod(Method setMethod, Class<?> clazz) {
         String getMethodName = setMethod.getName().replaceFirst("set", "get");
@@ -91,8 +99,9 @@ public class ReflectUtil {
 
     /**
      * 得到属性的get方法名称
-     * @param fieldName
-     * @return
+     *
+     * @param fieldName the field name
+     * @return get method name 4 field
      */
     public static String getGetMethodName4Field(String fieldName) {
         if (fieldName.length() == 0) {
@@ -106,8 +115,9 @@ public class ReflectUtil {
 
     /**
      * 得到属性的set方法名称
-     * @param fieldName
-     * @return
+     *
+     * @param fieldName the field name
+     * @return set method name 4 field
      */
     public static String getSetMethodName4Field(String fieldName) {
         if (fieldName.length() == 0) {
@@ -121,11 +131,12 @@ public class ReflectUtil {
 
     /**
      * 得到对象某个属性的get方法
-     * @param clazz
-     * @param fieldName
-     * @return
-     * @throws SecurityException
-     * @throws NoSuchMethodException
+     *
+     * @param clazz     the clazz
+     * @param fieldName the field name
+     * @return get method 4 field
+     * @throws SecurityException     the security exception
+     * @throws NoSuchMethodException the no such method exception
      */
     public static Method getGetMethod4Field(Class<?> clazz, String fieldName)
             throws SecurityException, NoSuchMethodException {
@@ -135,14 +146,16 @@ public class ReflectUtil {
 
     /**
      * 通过对象查询对象的属性值
-     * @param obj
-     * @param property
-     * @return
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     *
+     * @param <T>      the type parameter
+     * @param obj      the obj
+     * @param property the property
+     * @return value by property
+     * @throws SecurityException         the security exception
+     * @throws NoSuchMethodException     the no such method exception
+     * @throws IllegalArgumentException  the illegal argument exception
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InvocationTargetException the invocation target exception
      */
     public static <T> Object getValueByProperty(T obj, String property) throws SecurityException,
             NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
@@ -153,11 +166,12 @@ public class ReflectUtil {
 
     /**
      * 获得切面截取的方法对象
-     * @param j
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SecurityException
-     * @throws NoSuchMethodException
+     *
+     * @param j the j
+     * @return method
+     * @throws ClassNotFoundException the class not found exception
+     * @throws SecurityException      the security exception
+     * @throws NoSuchMethodException  the no such method exception
      */
     public static Method getMethod(ProceedingJoinPoint j) throws ClassNotFoundException, SecurityException, NoSuchMethodException {
         // 方法签名对象
@@ -172,9 +186,11 @@ public class ReflectUtil {
 
     /**
      * 根据签名对象获得其声明的参数类型数组
-     * @param s
-     * @return
-     * @throws ClassNotFoundException
+     *
+     * @param s the s
+     * @return class [ ]
+     * @throws ClassNotFoundException the class not found exception
+     * @since 2017.03.21
      */
     private static Class<?>[] getParamClass(Signature s) throws ClassNotFoundException {
         Class<?>[] paramClass;
@@ -197,9 +213,10 @@ public class ReflectUtil {
 
     /**
      * 根据字符串转换为对应的类对象
-     * @param className
-     * @return
-     * @throws ClassNotFoundException
+     *
+     * @param className the class name
+     * @return class
+     * @throws ClassNotFoundException the class not found exception
      */
     private static Class<?> getClass(String className) throws ClassNotFoundException {
         Class<?> clazz = null;

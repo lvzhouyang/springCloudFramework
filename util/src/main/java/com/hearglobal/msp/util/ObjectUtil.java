@@ -15,8 +15,15 @@ import java.util.*;
 
 /**
  * 基础对象操作
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class ObjectUtil {
+    /**
+     * The constant log.
+     */
     private static final Logger log = LoggerFactory.getLogger(ObjectUtil.class);
 
     /**
@@ -24,7 +31,7 @@ public class ObjectUtil {
      * <p/>
      * String = "", Integer=0, Long = 0, Boolean = false
      *
-     * @param obj
+     * @param obj the obj
      */
     public static void setDefault(Object obj) {
         try {
@@ -46,7 +53,8 @@ public class ObjectUtil {
      * <p/>
      * String = "", Integer=0, Long = 0, Boolean = false
      *
-     * @param obj
+     * @param obj           the obj
+     * @param excludeFields the exclude fields
      */
     public static void setDefaultExcludeFields(Object obj, String... excludeFields) {
         try {
@@ -64,6 +72,13 @@ public class ObjectUtil {
         }
     }
 
+    /**
+     * Sets default.
+     *
+     * @param field the field
+     * @param obj   the obj
+     * @throws IllegalAccessException the illegal access exception
+     */
     private static void setDefault(java.lang.reflect.Field field, Object obj) throws IllegalAccessException {
         if (field.getType().equals(String.class)) {
             field.set(obj, "");
@@ -99,10 +114,11 @@ public class ObjectUtil {
 
 
     /**
-     * 转换为字符串
+     * 提供统一的 Object  tostring 方法
      *
-     * @param obj
-     * @return
+     * @param obj the obj
+     * @return string string
+     * @since 2017.03.21
      */
     @SuppressWarnings("rawtypes")
     public static String toString(Object obj) {
@@ -152,10 +168,11 @@ public class ObjectUtil {
     }
 
     /**
-     * 集合
+     * 提供统一的 Collection  tostring 方法
      *
-     * @param objs
-     * @return
+     * @param objs the objs
+     * @return string string
+     * @since 2017.03.21
      */
     @SuppressWarnings("rawtypes")
     public static String toString(Collection objs) {
@@ -174,6 +191,13 @@ public class ObjectUtil {
         return sb.length() == 0 ? "[]" : "[" + sb.substring(0, sb.length() - 1) + "]";
     }
 
+    /**
+     * 判断是否有不为空的属性值
+     *
+     * @param obj the obj
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static boolean hasNonNullProperty(Object obj) {
         try {
             for (java.lang.reflect.Field field : obj.getClass().getDeclaredFields()) {
@@ -190,6 +214,13 @@ public class ObjectUtil {
 
     }
 
+    /**
+     *  提供统一的 Map  tostring 方法
+     *
+     * @param map the map
+     * @return the string
+     * @since 2017.03.21
+     */
     public static String toString(Map map) {
         // 先拿反射实现
         StringBuilder sb = new StringBuilder();
@@ -205,6 +236,11 @@ public class ObjectUtil {
 
     /**
      * 判断两个对象是否相同，推荐使用在基本类型数据的判断上
+     *
+     * @param obj1 the obj 1
+     * @param obj2 the obj 2
+     * @return the boolean
+     * @since 2017.03.21
      */
     public static boolean isSameObject(Object obj1, Object obj2) {
         if (obj1 == null && obj2 == null) {
@@ -217,8 +253,9 @@ public class ObjectUtil {
     /**
      * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
      *
-     * @param obj
-     * @return
+     * @param obj the obj
+     * @return map map
+     * @since 2017.03.21
      */
     public static Map<String, Object> transBean2Map(Object obj) {
         if (obj == null) {
@@ -246,7 +283,11 @@ public class ObjectUtil {
 
     /**
      * 判断对象属性是否为空
-     **/
+     *
+     * @param obj the obj
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static boolean isNullObj(Object obj) {
         if (obj == null ||
                 (obj instanceof Collection && ((Collection<?>) obj).size() == 0) ||

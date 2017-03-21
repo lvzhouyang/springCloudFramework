@@ -3,6 +3,10 @@ package com.hearglobal.msp.util;
 /**
  * 集中一些常用的正则
  * 待写测试用例
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class RegexUtil {
 

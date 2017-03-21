@@ -14,20 +14,37 @@ import java.util.List;
 
 /**
  * 日期工具类
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class DateUtil {
 
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
+    /**
+     * The constant DefaultShortFormat.
+     */
     public final static String DefaultShortFormat = "yyyy-MM-dd";
+    /**
+     * The constant DefaultLongFormat.
+     */
     public final static String DefaultLongFormat = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * The constant DefaultMinuteFormat.
+     */
     public final static String DefaultMinuteFormat = "yyyy-MM-dd HH:mm";
 
     /**
      * the string format must yyyy-MM-dd
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return date
+     * @since 2017.03.21
      */
     public static Date string2DateDay(String str) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultShortFormat);
@@ -48,8 +65,9 @@ public class DateUtil {
      * 格式化字符串成Date.格式不正确的时候抛异常出来
      *
      * @param str must be yyyy-MM-dd
-     * @return
-     * @throws Exception
+     * @return date
+     * @throws Exception the exception
+     * @since 2017.03.21
      */
     public static Date string2DateDay4Exception(String str) throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultShortFormat);
@@ -58,11 +76,11 @@ public class DateUtil {
     }
 
     /**
-     * the string format must yyyy-MM-dd HH:mm:ss
+     * 按照格式 yyyy-MM-dd HH:mm:ss 进行格式化
      *
-     * @param str
-     * @return
-     * 2011-4-21
+     * @param str the str
+     * @return 2011  -4-21
+     * @since 2017.03.21
      */
     public static Date string2DateSecond24(String str) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultLongFormat);
@@ -79,10 +97,11 @@ public class DateUtil {
     }
 
     /**
-     * the string format must yyyy-MM-dd HH:mm
+     * 按照格式 yyyy-MM-dd HH:mm 格式化
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return date
+     * @since 2017.03.21
      */
     public static Date stirng2DateMinute(String str) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultMinuteFormat);
@@ -95,11 +114,12 @@ public class DateUtil {
     }
 
     /**
-     * must yyyy MM dd HH mm ss
+     * 格式化 格式 yyyy MM dd HH mm ss
      *
-     * @param str
-     * @param formatString
-     * @return
+     * @param str          the str
+     * @param formatString the format string
+     * @return date
+     * @since 2017.03.21
      */
     public static Date stirng2Date(String str, String formatString) {
         SimpleDateFormat formatter = new SimpleDateFormat(formatString);
@@ -119,7 +139,8 @@ public class DateUtil {
      *
      * @param str          日期字符串
      * @param formatString 格式化的格式代码 yyyy MM dd HH mm ss
-     * @return
+     * @return date
+     * @since 2017.03.21
      */
     public static Date string2Date4Null(String str, String formatString) {
         SimpleDateFormat formatter = new SimpleDateFormat(formatString);
@@ -132,10 +153,11 @@ public class DateUtil {
     }
 
     /**
-     * yyyy-MM-dd
+     * 格式化为yyyy-MM-dd
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return string
+     * @since 2017.03.21
      */
     public static String Date2String(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultShortFormat);
@@ -143,10 +165,11 @@ public class DateUtil {
     }
 
     /**
-     * yyyyMMdd
+     * 格式化为 yyyyMMdd
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return integer
+     * @since 2017.03.21
      */
     public static Integer Date2IntDay(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -156,16 +179,20 @@ public class DateUtil {
     /**
      * 秒转日期
      *
-     * @param seconds
-     * @return
+     * @param seconds the seconds
+     * @return string
+     * @since 2017.03.21
      */
     public static String secondsToString(Integer seconds) {
         return Date2String(fromUnixTime(seconds));
     }
 
     /**
-     * @param date
-     * @return yyyy-MM-dd HH:mm的字符串
+     * 格式化为 yyyy-MM-dd HH:mm
+     *
+     * @param date the date
+     * @return yyyy -MM-dd HH:mm的字符串
+     * @since 2017.03.21
      */
     public static String Date2StringMin(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultMinuteFormat);
@@ -173,8 +200,11 @@ public class DateUtil {
     }
 
     /**
-     * @param date
-     * @return yyyy-MM-dd HH:mm:ss的字符串
+     * 格式化 yyyy-MM-dd HH:mm:ss
+     *
+     * @param date the date
+     * @return yyyy -MM-dd HH:mm:ss的字符串
+     * @since 2017.03.21
      */
     public static String Date2StringSec(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DefaultLongFormat);
@@ -182,19 +212,23 @@ public class DateUtil {
     }
 
     /**
-     * @param seconds
-     * @return 距当前时间的秒数
+     * Date 2 string sec string.
+     *
+     * @param seconds the seconds
+     * @return 距当前时间的秒数 string
+     * @since 2017.03.21
      */
     public static String Date2StringSec(Integer seconds) {
         return Date2StringSec(fromUnixTime(seconds));
     }
 
     /**
-     * must yyyy MM dd HH mm ss
+     * 按照指定格式格式化
      *
-     * @param date
-     * @param formatString
-     * @return
+     * @param date         the date
+     * @param formatString the format string
+     * @return string
+     * @since 2017.03.21
      */
     public static String Date2String(Date date, String formatString) {
         try {
@@ -209,7 +243,8 @@ public class DateUtil {
     /**
      * 返回当前时间的秒数
      *
-     * @return
+     * @return int
+     * @since 2017.03.21
      */
     public static int unixTime() {
         return (int) (System.currentTimeMillis() / 1000);
@@ -218,20 +253,31 @@ public class DateUtil {
     /**
      * 把秒转换为Date
      *
-     * @param seconds
-     * @return
+     * @param seconds the seconds
+     * @return date
+     * @since 2017.03.21
      */
     public static Date fromUnixTime(Integer seconds) {
         return new Date(seconds * 1000L);
     }
 
     /**
-     * @return
+     * 今天的日期
+     *
+     * @return date
+     * @since 2017.03.21
      */
     public static Date today() {
         return toDay(new Date());
     }
 
+    /**
+     * 转为日期
+     *
+     * @param date the date
+     * @return the date
+     * @since 2017.03.21
+     */
     public static Date toDay(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -245,8 +291,9 @@ public class DateUtil {
     /**
      * 指定日期当天的最后一秒
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return date
+     * @since 2017.03.21
      */
     public static Date toNight(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -263,7 +310,8 @@ public class DateUtil {
      *
      * @param startDateStr （yyyy-MM-dd） 开始时间
      * @param endDateStr   （yyyy-MM-dd） 结束时间
-     * @return
+     * @return list
+     * @since 2017.03.21
      */
     public static List<String> dateBetween(String startDateStr, String endDateStr) {
         List<String> dateList = new ArrayList<String>();
@@ -282,8 +330,9 @@ public class DateUtil {
     /**
      * 将时间转换成昨天
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return date
+     * @since 2017.03.21
      */
     public static Date toYesterday(Date date) {
         return add(date, Calendar.DAY_OF_YEAR, -1);
@@ -292,13 +341,23 @@ public class DateUtil {
     /**
      * 将时间转换成明天
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return date
+     * @since 2017.03.21
      */
     public static Date toTommorow(Date date) {
         return add(date, Calendar.DAY_OF_YEAR, 1);
     }
 
+    /**
+     * Add date.
+     *
+     * @param date  the date
+     * @param field the field
+     * @param value the value
+     * @return the date
+     * @since 2017.03.21
+     */
     private static Date add(Date date, int field, int value) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(date.getTime());
@@ -309,9 +368,9 @@ public class DateUtil {
     /**
      * 得到某年某月有多少天
      *
-     * @param year
-     * @param month
-     * @return
+     * @param year  the year
+     * @param month the month
+     * @return month days
      */
     public static int getMonthDays(Integer year, Integer month) {
         Calendar c = Calendar.getInstance();
@@ -322,8 +381,8 @@ public class DateUtil {
     /**
      * 得到年份
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return year
      */
     public static int getYear(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -334,8 +393,8 @@ public class DateUtil {
     /**
      * 得到月份
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return month
      */
     public static int getMonth(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -346,8 +405,8 @@ public class DateUtil {
     /**
      * 得到某天的星期.1~~7
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return day of week
      */
     public static int getDayOfWeek(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -383,8 +442,9 @@ public class DateUtil {
     /**
      * 日期（天）转unixtime
      *
-     * @param day
-     * @return
+     * @param day the day
+     * @return int
+     * @since 2017.03.21
      */
     public static int day2Unixtime(String day) {
         return (int) (DateUtil.string2DateDay(day).getTime() / 1000L);
@@ -393,18 +453,20 @@ public class DateUtil {
     /**
      * date转unixtime
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return int
+     * @since 2017.03.21
      */
     public static int date2Unixtime(Date date) {
         return (int) (date.getTime() / 1000L);
     }
 
     /**
-     * 得到时间
+     * 输入Date 日期得到 时间
      *
-     * @param date
-     * @return
+     * @param date the date
+     * @return date
+     * @since 2017.03.21
      */
     public static Date toTime(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -415,6 +477,14 @@ public class DateUtil {
         return cal.getTime();
     }
 
+    /**
+     * 输入Date 日期和天数 判断今天是否超期
+     *
+     * @param date     the date
+     * @param dayCount the day count
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static Boolean isExceedSomeDays(Date date, Integer dayCount) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -427,14 +497,36 @@ public class DateUtil {
     }
 
 
+    /**
+     * 判断输入的两个时间是否相同
+     *
+     * @param firtDate   the firt date
+     * @param secondDate the second date
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static boolean isSameDate(Date firtDate, Date secondDate) {
         return toDay(firtDate).equals(toDay(secondDate));
     }
 
+    /**
+     * 输入时间字符串转换成时间戳 格式输出
+     *
+     * @param time the time
+     * @return the timestamp
+     * @since 2017.03.21
+     */
     public static Timestamp stringToTimestamp(String time) {
         return new Timestamp(stirng2Date(time, DefaultLongFormat).getTime());
     }
 
+    /**
+     * 将integer类型的秒转换称时间字符串输出
+     *
+     * @param second the second
+     * @return the string
+     * @since 2017.03.21
+     */
     public static String intSecond2Str(Integer second) {
         Long time = second * 1000l;
         Date date = new Date(time);
@@ -443,6 +535,10 @@ public class DateUtil {
 
     /**
      * yyyyMMdd转yyyy-MM-dd
+     *
+     * @param dateStr the date str
+     * @return the string
+     * @since 2017.03.21
      */
     public static String transDateStr(String dateStr) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -456,9 +552,10 @@ public class DateUtil {
 
     /**
      * 得到几天前的时间
-     * @param d
-     * @param day
-     * @return
+     *
+     * @param d   the d
+     * @param day the day
+     * @return date before
      */
     public static Date getDateBefore(Date d,int day) {
         Calendar now =Calendar.getInstance();

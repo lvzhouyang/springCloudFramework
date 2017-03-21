@@ -11,12 +11,28 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Created by lvzhouyang on 17/1/5.
+ * Http工具
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class HttpUtil {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
 
+    /**
+     * Post boolean.
+     *
+     * @param serverUrl the server url
+     * @param data      the data
+     * @param timeout   the timeout
+     * @return the boolean
+     * @since 2017.03.21
+     */
     public static boolean post(String serverUrl, String data, long timeout) {
         StringBuilder responseBuilder = null;
         BufferedReader reader = null;

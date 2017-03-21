@@ -3,9 +3,13 @@ package com.hearglobal.msp.util;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+
 /**
  * 用于校验一个字符串是否是合法的JSON格式
  *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.21
  */
 public class JsonValidator {
 
@@ -18,9 +22,10 @@ public class JsonValidator {
 
     /**
      * 验证一个字符串是否是合法的JSON串
-     * 
+     *
      * @param input 要验证的字符串
-     * @return true-合法 ，false-非法
+     * @return true -合法 ，false-非法
+     * @since 2017.03.21
      */
     public boolean validate(String input) {
         input = input.trim();
