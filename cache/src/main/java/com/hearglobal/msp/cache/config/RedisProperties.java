@@ -4,11 +4,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * Created by lvzhouyang on 16/12/14.
+ * Redis 配置文件 properties对应类
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @RefreshScope
 @ConfigurationProperties(prefix = RedisProperties.DS, ignoreUnknownFields = false)
-public class RedisProperties {
+class RedisProperties {
     //对应配置文件里的配置键
     public final static String DS = "spring.redis";
 

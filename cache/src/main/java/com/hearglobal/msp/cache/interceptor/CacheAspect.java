@@ -23,9 +23,11 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * 缓存切面
+ * 缓存切面 实现将方法返回值自动添加到缓存/从缓存取
  *
  * @author lvzhouyang
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Aspect
 @Component

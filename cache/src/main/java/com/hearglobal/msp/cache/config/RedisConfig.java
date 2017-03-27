@@ -28,7 +28,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * Created by lvzhouyang on 16/12/14.
+ * Redis配置类
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Configuration
 @EnableCaching

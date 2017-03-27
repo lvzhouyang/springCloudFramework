@@ -10,9 +10,13 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
 /**
- * Created by lvzhouyang on 16/12/22.
+ * Redis object缓存序列号方法
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
-public class RedisObjectSerializer implements RedisSerializer<Object> {
+class RedisObjectSerializer implements RedisSerializer<Object> {
     private Logger logger = LoggerFactory.getLogger(RedisObjectSerializer.class);
     private Converter<Object, byte[]> serializer = new SerializingConverter();
     private Converter<byte[], Object> deserializer = new DeserializingConverter();
