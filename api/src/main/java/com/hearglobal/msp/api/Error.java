@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * api 错误类
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class Error {
 

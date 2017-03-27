@@ -2,6 +2,10 @@ package com.hearglobal.msp.api;
 
 /**
  * api接口请求 通用错误码
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public enum CommonErrorCode implements ErrorCode {
 

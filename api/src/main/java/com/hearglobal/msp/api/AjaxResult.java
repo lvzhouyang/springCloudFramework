@@ -5,17 +5,25 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * Created by lvzhouyang on 16/12/14.
+ * 给前端的返回值封装
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class AjaxResult {
+    /**
+     * Instantiates a new Ajax result.
+     */
     private AjaxResult() {
     }
 
     /**
      * 返回成功消息
      *
-     * @param msg
-     * @return
+     * @param msg the msg
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxSuccessMap(String msg) {
         Map<String, Object> ret = Maps.newHashMap();
@@ -27,7 +35,8 @@ public class AjaxResult {
     /**
      * 返回成功默认消息
      *
-     * @return
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createSuccessMap() {
         Map<String, Object> ret = Maps.newHashMap();
@@ -39,8 +48,9 @@ public class AjaxResult {
     /**
      * 返回成功数据
      *
-     * @param data
-     * @return
+     * @param data the data
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxSuccessMap(Object data) {
         Map<String, Object> ret = Maps.newHashMap();
@@ -50,6 +60,14 @@ public class AjaxResult {
     }
 
 
+    /**
+     * Create ajax success map map.
+     *
+     * @param data the data
+     * @param page the page
+     * @return the map
+     * @since 2017.03.27
+     */
     public static Map<String, Object> createAjaxSuccessMap(Object data, Page page) {
         Map<String, Object> ret = Maps.newHashMap();
         ret.put("status", 1);
@@ -61,9 +79,10 @@ public class AjaxResult {
     /**
      * 返回成功消息和数据
      *
-     * @param data
-     * @param msg
-     * @return
+     * @param data the data
+     * @param msg  the msg
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxSuccessMap(Object data, String msg) {
         Map<String, Object> ret = Maps.newHashMap();
@@ -76,8 +95,9 @@ public class AjaxResult {
     /**
      * 返回失败消息
      *
-     * @param msg
-     * @return
+     * @param msg the msg
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxFailMap(String msg) {
         Map<String, Object> ret = Maps.newHashMap();
@@ -89,8 +109,9 @@ public class AjaxResult {
     /**
      * 返回失败数据
      *
-     * @param data
-     * @return
+     * @param data the data
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxFailMap(Object data) {
         Map<String, Object> ret = Maps.newHashMap();
@@ -102,9 +123,10 @@ public class AjaxResult {
     /**
      * 返回失败消息和数据
      *
-     * @param data
-     * @param msg
-     * @return
+     * @param data the data
+     * @param msg  the msg
+     * @return map
+     * @since 2017.03.27
      */
     public static Map<String, Object> createAjaxFailMap(Object data, String msg) {
         Map<String, Object> ret = Maps.newHashMap();

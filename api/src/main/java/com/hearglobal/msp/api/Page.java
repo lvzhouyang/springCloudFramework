@@ -6,7 +6,8 @@ import java.io.Serializable;
  * 分页
  *
  * @author lvzhouyang
- * @create 2017-02-15-下午1:48
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class Page implements Serializable {
     private int currentPageNum = 1;// 当前第几页(默认第一页),---主要用于传递到前台显示
