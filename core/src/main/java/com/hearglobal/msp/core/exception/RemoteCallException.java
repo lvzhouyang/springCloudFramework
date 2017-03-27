@@ -1,9 +1,13 @@
 package com.hearglobal.msp.core.exception;
 
 import com.hearglobal.msp.api.Error;
+
 /**
  * hystrix会忽略这个异常, 不会触发熔断
  *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class RemoteCallException extends AppBusinessException {
 

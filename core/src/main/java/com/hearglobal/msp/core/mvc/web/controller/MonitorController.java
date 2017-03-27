@@ -12,6 +12,10 @@ import java.util.Map;
  * 统一监控类 用以监控服务可用性
  * 会与faclon整合 进行服务监控
  * 配置刷新
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @RestApiController
 public class MonitorController {

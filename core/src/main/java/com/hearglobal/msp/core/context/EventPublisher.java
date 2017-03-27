@@ -7,7 +7,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * Created by lvzhouyang on 17/1/16.
+ * spring事件发布器
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Component
 public class EventPublisher {

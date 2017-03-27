@@ -21,7 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Created by lvzhouyang on 16/12/14.
+ * 统一异常处理
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")

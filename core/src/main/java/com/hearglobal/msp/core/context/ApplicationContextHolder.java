@@ -4,6 +4,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * The type Application context holder.
+ * 容器holder
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
+ */
 public class ApplicationContextHolder implements ApplicationContextAware {
 
     public static ApplicationContext context;

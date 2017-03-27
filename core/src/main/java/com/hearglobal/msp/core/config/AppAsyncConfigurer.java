@@ -9,7 +9,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 /**
- * Created by lvzhouyang on 17/1/16.
+ * 异步处理定义 配置
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Configuration
 public class AppAsyncConfigurer implements AsyncConfigurer {

@@ -22,6 +22,10 @@ import java.lang.reflect.Method;
 
 /**
  * controller的拦截器
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Aspect
 @Component

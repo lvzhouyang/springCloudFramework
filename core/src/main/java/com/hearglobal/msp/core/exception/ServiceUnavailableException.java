@@ -5,7 +5,12 @@ import com.hearglobal.msp.api.CommonErrorCode;
 import com.hearglobal.msp.api.ErrorCode;
 
 /**
+ * The type Service unavailable exception.
+ * 服务不可用异常
  *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class ServiceUnavailableException extends AppBusinessException {
 

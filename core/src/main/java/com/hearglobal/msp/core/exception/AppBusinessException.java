@@ -4,6 +4,14 @@ package com.hearglobal.msp.core.exception;
 import com.hearglobal.msp.api.CommonErrorCode;
 import com.hearglobal.msp.api.ErrorCode;
 
+/**
+ * The type App business exception.
+ * 定义业务异常
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
+ */
 public class AppBusinessException extends BaseException {
 
     private static final ErrorCode DEFAULT_CODE = CommonErrorCode.INTERNAL_ERROR;

@@ -8,6 +8,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
+/**
+ * The type Base configuration.
+ * 定义Spring cloud基础支持的配置
+ * 定义扫包范围
+ * 定义容器常量存储
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
+ */
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableFeignClients("com.hearglobal.**.service")

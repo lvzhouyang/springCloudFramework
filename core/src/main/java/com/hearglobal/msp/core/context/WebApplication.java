@@ -17,7 +17,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Created by lvzhouyang on 16/12/14.
+ * swagger定义
+ * resttemplate定义
+ * 统一异常处理的定义
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @EnableSwagger2
 public class WebApplication {

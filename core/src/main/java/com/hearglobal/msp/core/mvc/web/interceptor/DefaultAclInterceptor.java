@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
  * 鉴权拦截器
  * 请求时间记录
  * Created by lvzhouyang on 16/12/14.
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class DefaultAclInterceptor implements HandlerInterceptor {
     private final Logger logger = LoggerFactory.getLogger(DefaultAclInterceptor.class);

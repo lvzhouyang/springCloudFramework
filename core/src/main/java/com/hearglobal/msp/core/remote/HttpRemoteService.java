@@ -59,9 +59,9 @@ public class HttpRemoteService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public static String DATA = "data";
-    public static String STATUS = "status";
-    public static String ERROR = "error";
+    private static String DATA = "data";
+    private static String STATUS = "status";
+    private static String ERROR = "error";
 
     public <T> T invoke(Map<String, Object> response, TypeReference<T> typeReference) {
         if (MapUtils.isEmpty(response)) {

@@ -32,6 +32,10 @@ import java.util.stream.Collectors;
 
 /**
  * 统一异常处理
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @ControllerAdvice
 public class AppExceptionHandlerController extends ResponseEntityExceptionHandler {

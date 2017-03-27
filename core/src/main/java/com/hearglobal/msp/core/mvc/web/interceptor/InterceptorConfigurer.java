@@ -6,7 +6,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * 自定义拦截器配置
- * Created by lvzhouyang on 16/12/14.
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Configuration
 public class InterceptorConfigurer extends WebMvcConfigurerAdapter {

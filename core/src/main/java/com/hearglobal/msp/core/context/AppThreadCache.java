@@ -4,8 +4,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ThreadLocal
+ * ThreadLocal 存储当前登录信息等状态
+ *
  * @author lvzhouyang
+ * @version 1.0
+ * @since 2017.03.27
  */
 public class AppThreadCache {
     private static final ThreadLocal<ThreadContext> cache = new ThreadLocal<ThreadContext>() {

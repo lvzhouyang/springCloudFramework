@@ -13,7 +13,6 @@ import java.util.Map;
  *
  * @author lvzhouyang
  * @version 1.0
- * @create 2017 -02-10-上午10:07
  * @since 2017.02.10
  */
 public class ApiResponse {
