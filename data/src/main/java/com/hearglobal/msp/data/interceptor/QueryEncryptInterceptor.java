@@ -16,12 +16,11 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * The type Query encrypt interceptor.
+ * 当加密字段作为查询条件时
  *
  * @author lvzhouyang
  * @version 1.0
- * @Description 当加密字段作为查询条件时
- * @create 2017 -02-08-上午10:43
+ * 当加密字段作为查询条件时
  * @since 2017.02.08
  */
 @Intercepts(

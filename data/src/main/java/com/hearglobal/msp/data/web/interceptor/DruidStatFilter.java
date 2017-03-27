@@ -6,7 +6,11 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
 /**
- * Created by lvzhouyang on 16/8/23.
+ * druid监控配置
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @WebFilter(filterName="druidWebStatFilter",urlPatterns="/*",
         initParams={

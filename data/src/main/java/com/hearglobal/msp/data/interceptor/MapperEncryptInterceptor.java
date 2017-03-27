@@ -11,8 +11,10 @@ import java.util.Properties;
 
 /**
  * mybatis 拦截器 进行更新操作的加密
- * User: lvzhouyang
- * Date: 15/9/15
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Intercepts({
         @Signature(type = Executor.class, method = "update", args = {

@@ -26,10 +26,14 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * sql执行性能监控
+ * 只在debug环境生效
+ *
  * @author lvzhouyang
- * @Description SQL执行性能监控
- * 只用于dev环境
- * @create 2017-02-08-上午10:11
+ * @version 1.0
+ * @Description SQL执行性能监控  只用于dev环境
+ * @create 2017 -02-08-上午10:11
+ * @since 2017.03.27
  */
 @Intercepts({
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),

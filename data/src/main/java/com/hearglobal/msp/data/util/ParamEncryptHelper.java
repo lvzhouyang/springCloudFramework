@@ -19,8 +19,6 @@ import java.util.stream.Stream;
  *
  * @author lvzhouyang
  * @version 1.0
- * @Description 针对参数 加密、界面的工具
- * @create 2017 -02-08-下午12:01
  * @since 2017.02.08
  */
 public class ParamEncryptHelper {

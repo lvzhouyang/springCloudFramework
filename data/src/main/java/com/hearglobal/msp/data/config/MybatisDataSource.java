@@ -31,7 +31,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by lvzhouyang on 16/12/12.
+ * Mybatis配置
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)

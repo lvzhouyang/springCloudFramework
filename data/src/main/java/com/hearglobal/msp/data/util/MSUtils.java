@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
+ * The type Ms utils.
+ * 创建mybatis的mapperState
+ *
  * @author lvzhouyang
- * @Description 创建mybatis的mapperState
- * @create 2017-02-08-下午2:10
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Component
-public class MSUtils {
+class MSUtils {
 
 
     @Autowired

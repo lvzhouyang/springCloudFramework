@@ -4,7 +4,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * Created by lvzhouyang on 16/12/12.
+ * 数据库连接池 属性对应文件
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @RefreshScope
 @ConfigurationProperties(prefix = DataSourceProperties.DS, ignoreUnknownFields = false)

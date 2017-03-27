@@ -8,7 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by lvzhouyang on 16/8/23.
+ * druid连接池配置
+ *
+ * @author lvzhouyang.
+ * @version 1.0
+ * @since 2017.03.27
  */
 @Configuration
 public class DruidConfig {
