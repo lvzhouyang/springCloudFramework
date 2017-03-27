@@ -32,6 +32,9 @@ import java.util.List;
 
 /**
  * Mybatis配置
+ * no comments for you
+ * it was hard to write
+ * so it should be hard to read
  *
  * @author lvzhouyang.
  * @version 1.0
