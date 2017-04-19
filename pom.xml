@@ -15,7 +15,6 @@
         <module>data</module>
         <module>cache</module>
         <module>util</module>
-        <module>queue</module>
     </modules>
 
     <properties>

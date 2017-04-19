@@ -8,24 +8,25 @@ import org.slf4j.LoggerFactory;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
 /**
- *  .--,       .--,
+ * .--,       .--,
  * ( (  \.---./  ) )
- *  '.__/o   o\__.'
- *     {=  ^  =}
- *      >  -  <
- *     /       \
- *    //       \\
- *   //|   .   |\\
- *   "'\       /'"_.-~^`'-.
- *      \  _  /--'         `
- *    ___)( )(___
- *   (((__) (__)))    高山仰止,景行行止.虽不能至,心向往之。
+ * '.__/o   o\__.'
+ * {=  ^  =}
+ * >  -  <
+ * /       \
+ * //       \\
+ * //|   .   |\\
+ * "'\       /'"_.-~^`'-.
+ * \  _  /--'         `
+ * ___)( )(___
+ * (((__) (__)))    高山仰止,景行行止.虽不能至,心向往之。
  * 基础对象操作
  *
  * @author lvzhouyang.
@@ -227,7 +228,7 @@ public class ObjectUtil {
     }
 
     /**
-     *  提供统一的 Map  tostring 方法
+     * 提供统一的 Map  tostring 方法
      *
      * @param map the map
      * @return the string
@@ -246,21 +247,6 @@ public class ObjectUtil {
         return sb.length() == 0 ? "{}" : "{" + sb.substring(0, sb.length() - 1) + "}";
     }
 
-    /**
-     * 判断两个对象是否相同，推荐使用在基本类型数据的判断上
-     *
-     * @param obj1 the obj 1
-     * @param obj2 the obj 2
-     * @return the boolean
-     * @since 2017.03.21
-     */
-    public static boolean isSameObject(Object obj1, Object obj2) {
-        if (obj1 == null && obj2 == null) {
-            return true;
-        } else {
-            return obj1 != null && obj2 != null && obj1.equals(obj2);
-        }
-    }
 
     /**
      * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
@@ -309,6 +295,68 @@ public class ObjectUtil {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 判断两个对象是否相同
+     *
+     * @param source the source
+     * @param target the target
+     * @return the boolean
+     * @since 2017.04.17
+     */
+    public static boolean isSame(Object source, Object target) {
+        try {
+            // 获取对象的class
+            Class<?> clazz1 = source.getClass();
+            Class<?> clazz2 = target.getClass();
+            // 如果class不同
+            if (!clazz1.getSimpleName().equals(clazz2.getSimpleName())) {
+                return false;
+            }
+            // 获取对象的属性列表
+            Field[] field1 = clazz1.getDeclaredFields();
+            Field[] field2 = clazz2.getDeclaredFields();
+            // 属性列表长度不同
+            if (field1.length != field2.length) {
+                return false;
+            }
+            // 遍历属性列表field1
+            for (Field aField1 : field1) {
+                //遍历属性列表field2
+                for (Field aField2 : field2) {
+                    //如果field1[i]属性名与field2[j]属性名内容相同
+                    if (aField1.getName().equals(aField2.getName())) {
+                        aField1.setAccessible(true);
+                        aField2.setAccessible(true);
+                        //如果field1[i]属性值与field2[j]属性值内容不相同
+                        if (!isSameObject(aField1.get(source), aField2.get(target))) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * 判断两个对象是否相同，推荐使用在基本类型数据的判断上
+     *
+     * @param obj1 the obj 1
+     * @param obj2 the obj 2
+     * @return the boolean
+     * @since 2017.03.21
+     */
+    public static boolean isSameObject(Object obj1, Object obj2) {
+        if (obj1 == null && obj2 == null) {
+            return true;
+        } else {
+            return obj1 != null && obj2 != null && obj1.equals(obj2);
         }
     }
 }

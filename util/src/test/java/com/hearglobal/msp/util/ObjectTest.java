@@ -21,6 +21,7 @@ public class ObjectTest {
     @Before
     public void init() {
         ObjectUtil.setDefault(user);
+        ObjectUtil.setDefault(user1);
         user.setUserName("cg");
         user1.setUserName("cg");
     }
@@ -40,7 +41,7 @@ public class ObjectTest {
     @Test
     //测试两个对象的属性值是否相同 最好用于基本类型数据
     public void isSameTest() {
-        System.out.println(ObjectUtil.isSameObject(user.getUserName(), user1.getUserName()));
+        System.out.println(ObjectUtil.isSame(user, user1));
     }
 
     @Test

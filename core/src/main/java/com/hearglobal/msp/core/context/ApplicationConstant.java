@@ -14,4 +14,7 @@ public class ApplicationConstant {
     @Value("${spring.application.name}")
     public String applicationName;
 
+    @Value("${api.debug:false}")
+    public String apiDebug;
+
 }
