@@ -38,6 +38,7 @@ public class ApiAuthInterceptor implements HandlerInterceptor {
             return true;
         }
         if (uri.contains("/api")) {
+            // todo probe 指定某些api 不走鉴权
             String method = request.getMethod();
             String date = request.getHeader("Auth-Date");
             String authHeader = request.getHeader("API-AUTH");

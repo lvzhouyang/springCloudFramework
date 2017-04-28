@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
  * The type Base configuration.
@@ -37,6 +38,9 @@ public class BaseConfiguration {
     public ApplicationContextHolder applicationContextHolder() {
         return ApplicationContextHolder.getInstance();
     }
-
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        return new MethodValidationPostProcessor();
+    }
 
 }
