@@ -38,6 +38,7 @@ public class BaseConfiguration {
     public ApplicationContextHolder applicationContextHolder() {
         return ApplicationContextHolder.getInstance();
     }
+
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
